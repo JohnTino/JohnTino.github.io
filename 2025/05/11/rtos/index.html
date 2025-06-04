@@ -1,0 +1,691 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="referrer" content="no-referrer" />
+  
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="JohnTino">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="FreeRtos八股什么是任务？在实时操作系统（RTOS）或通用操作系统中，任务（Task）是指一个独立的执行单元，通常对应一个线程或进程。任务具有以下特点：1、每个任务有自己的堆栈、程序计数器和状态。2、任务可以处于运行、就绪、阻塞等状态。3、任务之间可以通过优先级、时间片等方式竞争 CPU 资源。 任务调度的基本原理任务调度的核心是从就绪队列中选择一个任务并分配 CPU 资源。调度过程包括以下">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FreeRtos">
+<meta property="og:url" content="http://example.com/2025/05/11/rtos/index.html">
+<meta property="og:site_name" content="JohnTino&#39;s Blog">
+<meta property="og:description" content="FreeRtos八股什么是任务？在实时操作系统（RTOS）或通用操作系统中，任务（Task）是指一个独立的执行单元，通常对应一个线程或进程。任务具有以下特点：1、每个任务有自己的堆栈、程序计数器和状态。2、任务可以处于运行、就绪、阻塞等状态。3、任务之间可以通过优先级、时间片等方式竞争 CPU 资源。 任务调度的基本原理任务调度的核心是从就绪队列中选择一个任务并分配 CPU 资源。调度过程包括以下">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/post/9.jpg">
+<meta property="article:published_time" content="2025-05-11T10:27:00.000Z">
+<meta property="article:modified_time" content="2025-05-11T13:03:10.159Z">
+<meta property="article:author" content="JohnTino">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/post/9.jpg">
+  
+  
+  
+  <title>FreeRtos - JohnTino&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/scroll.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body><!-- hexo injector body_begin start --><div id="web_bg"></div><!-- hexo injector body_begin end -->
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>JohnTino&#39;s Blog</strong>
+      <!-- 2025-5-11 -->
+      <!-- <strong class="navbar-title">JohnTino&#39;s Blog</strong> -->
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="FreeRtos"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-05-11 18:27" pubdate>
+          2025年5月11日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          34 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+    <script>
+      var OriginTitile = document.title;
+      var titleTime;
+      document.addEventListener('visibilitychange', function () {
+        if (document.hidden) {
+          // 离开当前页面时标签显示内容
+          document.title = '青山一片云雾';
+          clearTimeout(titleTime);
+        } else {
+          // 返回当前页面时标签显示内容
+          document.title = '心安即归处';
+          // 两秒后变回正常标题
+          titleTime = setTimeout(function () {
+            document.title = OriginTitile;
+          }, 2000);
+        }
+      });
+    </script>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">FreeRtos</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="FreeRtos八股"><a href="#FreeRtos八股" class="headerlink" title="FreeRtos八股"></a>FreeRtos八股</h2><h3 id="什么是任务？"><a href="#什么是任务？" class="headerlink" title="什么是任务？"></a>什么是任务？</h3><p>在实时操作系统（RTOS）或通用操作系统中，任务（Task）是指一个独立的执行单元，通常对应一个线程或进程。任务具有以下特点：<br>1、每个任务有自己的堆栈、程序计数器和状态。<br>2、任务可以处于运行、就绪、阻塞等状态。<br>3、任务之间可以通过优先级、时间片等方式竞争 CPU 资源。</p>
+<h3 id="任务调度的基本原理"><a href="#任务调度的基本原理" class="headerlink" title="任务调度的基本原理"></a>任务调度的基本原理</h3><p>任务调度的核心是从就绪队列中选择一个任务并分配 CPU 资源。调度过程包括以下步骤：<br>1、任务创建：初始化任务的控制块（TCB），分配堆栈，设置初始状态为就绪。<br>2、任务选择：根据调度算法从就绪队列中选择一个任务。<br>3、上下文切换：保存当前任务的上下文（如寄存器、程序计数器等），恢复下一个任务的上下文。<br>4、任务执行：将 CPU 分配给选中的任务，任务进入运行状态。<br>5、任务切换：当任务因阻塞、时间片用完或更高优先级任务就绪时，重新调度。</p>
+<h3 id="任务调度算法"><a href="#任务调度算法" class="headerlink" title="任务调度算法"></a>任务调度算法</h3><p>FreeRTOS主要支持两种调度策略：抢占式调度和协同调度。抢占式调度是最常见的调度策略，它允许高优先级任务中断低优先级任务的执行。协同调度则是一种简单的调度策略，所有任务轮流执行，没有优先级的概念。   此外，FreeRTOS还支持时间分片调度，即每个任务分配一个固定的时间片，轮流执行。<br>实时系统的调度是指给定一组实时任务和系统资源，确定每个任务何时何地执行的整个过程。调度算法决定了任务的选择规则，常见的调度算法包括：<br>(1) 优先级调度（Priority Scheduling）。<br>每个任务有一个优先级，优先级高的任务优先执行。分为抢占式（Preemptive）和非抢占式（Non-Preemptive）。抢占式指高优先级任务就绪时，立即抢占低优先级任务的CPU。非抢占式指任务运行完后才检查是否有更高优先级任务就绪。<br>(2) 时间片轮转（Round Robin） 。<br>每个任务分配固定的时间片（Time Slice），时间片用完后切换下一个任务。保证公平性，适合分时系统。<br>(3) 多级反馈队列（Multilevel Feedback Queue）<br>将任务分为多个优先级队列，每个队列采用不同的调度策略。任务根据执行情况动态调整优先级。<br>(4) 实时调度算法<br>Rate-Monotonic Scheduling（RMS）固定优先级调度，周期短的任务优先级高。<br>Earliest Deadline First（EDF）：动态优先级调度，截止时间最早的任务优先级高。</p>
+<h3 id="任务在执行过程中的不同状态"><a href="#任务在执行过程中的不同状态" class="headerlink" title="任务在执行过程中的不同状态"></a>任务在执行过程中的不同状态</h3><p>就绪（Ready）：任务已经准备好运行，等待 CPU 分配资源。<br>运行（Running）：任务正在占用 CPU 执行。<br>阻塞（Blocked）：任务因等待资源（如信号量、事件、I&#x2F;O 等）而被挂起。<br>挂起（Suspended）：任务被显式挂起，暂时不参与调度。<br>终止（Terminated）：任务执行完成或被删除。</p>
+<h3 id="不可剥夺型内核-和-可剥夺型内核-的区别？"><a href="#不可剥夺型内核-和-可剥夺型内核-的区别？" class="headerlink" title="不可剥夺型内核 和 可剥夺型内核 的区别？"></a>不可剥夺型内核 和 可剥夺型内核 的区别？</h3><p>不可剥夺型内核：各个任务彼此合作共享一个CPU，内核要求每个任务自我放弃CPU的所有权，即在执行任务过程中，一个任务可以一直运行，只有当前运行的任务主动放弃CPU控制权才会进行任务切换。不可剥夺型调度法也称作合作型多任务，各个任务彼此合作共享一个CPU。<br>可剥夺型内核：根据优先级可占用当前CPU的使用权，系统可以强制中断正在执行的任务，并将控制权交给其他高优先级的任务。FreeRtos就是剥夺型内核。</p>
+<h3 id="上下文切换（Context-Switching）涉及哪些步骤："><a href="#上下文切换（Context-Switching）涉及哪些步骤：" class="headerlink" title="上下文切换（Context Switching）涉及哪些步骤："></a>上下文切换（Context Switching）涉及哪些步骤：</h3><p>FreeRTOS内核是系统的核心部分，主要由任务控制块（TCB）、任务调度器、上下文切换机制三部分组成，介绍如下：<br>任务控制块（TCB）：每个任务都有一个任务控制块，用于保存任务的状态、优先级、堆栈指针等信息；<br>任务调度器：调度器根据任务优先级调度算法决定要运行的任务；<br>上下文切换机制：负责任务间切换上下文，也就是保存当前任务的寄存器状态和恢复下一个任务的寄存器状态。<br>上下文切换需要进行工作：<br>1、保存当前任务上下文：将 CPU 寄存器、程序计数器等保存到当前任务的控制块（TCB）中。<br>2、加载下一个任务上下文：从下一个任务的 TCB 中恢复寄存器、程序计数器等。<br>3、切换到下一个任务：更新 CPU 状态，开始执行下一个任务。<br>上下文切换的开销较大，因此调度算法的设计需要尽量减少切换频率。</p>
+<h3 id="什么是临界区和临界资源，原理是什么"><a href="#什么是临界区和临界资源，原理是什么" class="headerlink" title="什么是临界区和临界资源，原理是什么"></a>什么是临界区和临界资源，原理是什么</h3><p>临界区：进程中访问临界资源的代码段。该区域需要被互斥执行，确保同一时间只有一个进程进入。例如，多个进程修改同一个全局变量时，访问该变量的代码段即为临界区。<br>临界资源就是临界区中的共享资源，比如消息队列、共享内存等。FreeRTOS在进出临界区时通过关闭和打开受FreeRTOS管理的中断来保护临界区中的代码，注意，FreeRTOS的临界区是可以嵌套的，也就是程序可以重复进入临界区，后续也需要重复退出相同次数的临界区。</p>
+<h3 id="什么是任务死锁？"><a href="#什么是任务死锁？" class="headerlink" title="什么是任务死锁？"></a>什么是任务死锁？</h3><p>任务死锁是FreeRTOS中比较常见的问题，表现为多个任务互相等待对方释放资源，任务死锁的现象如下：<br>比如现在有两个任务：任务A和任务B，这两个任务要访问两个共享资源：资源M和资源N。此时，任务A获取到了资源M，任务B获取到了资源N，当任务A接着尝试获取资源N时会进入阻塞，等待任务B释放资源，若此时任务B尝试获取资源M，同样会进入阻塞，等待任务A释放资源，这就造成了任务死锁，两个任务互相等待对方释放资源。 </p>
+<h3 id="FreeRTOS内存分配机制："><a href="#FreeRTOS内存分配机制：" class="headerlink" title="FreeRTOS内存分配机制："></a>FreeRTOS内存分配机制：</h3><p>1、动态内存分配（默认）：动态内存分配是指在任务运行时从堆（Heap）中分配内存；FreeRTOS 提供了多种堆管理方案，用户可以根据需求选择合适的方案；使用动态内存分配时，需要通过 FreeRTOS 提供的 API（如 pvPortMalloc 和 vPortFree）来分配和释放内存。<br>2、静态内存分配：静态内存分配是指允许用户在编译时为任务和内核对象（如队列、信号量等）分配静态内存；使用静态内存分配时，任务、队列、信号量等对象的内存由开发者显式定义，无需运行时分配。；这种方式适合内存受限的系统，可以避免堆内存碎片问题。</p>
+<h3 id="FreeRTOS如何实现任务的优先级反转避免？"><a href="#FreeRTOS如何实现任务的优先级反转避免？" class="headerlink" title="FreeRTOS如何实现任务的优先级反转避免？"></a>FreeRTOS如何实现任务的优先级反转避免？</h3><p>任务优先级反转是指一个低优先级任务持有一个高优先级任务需要的资源，导致高优先级任务无法执行的情况。<br>FreeRTOS通过优先级继承和优先级天花板两种机制来避免优先级反转。优先级继承允许低优先级任务临时提升到高优先级任务的优先级，而优先级天花板是在访问共享资源时设置一个最高的优先级，以确保不会发生优先级反转。</p>
+<h3 id="中断嵌套和抢占混乱问题"><a href="#中断嵌套和抢占混乱问题" class="headerlink" title="中断嵌套和抢占混乱问题"></a>中断嵌套和抢占混乱问题</h3><p>1、使用中断禁用和使能控制<br>在关键的代码段（如中断处理程序的某些部分或者任务调度相关的代码段）禁止中断。例如，在中断处理程序更新与任务调度相关的数据结构时，禁止其他中断的进入。这样可以保证当前操作的原子性，避免被其他中断打断。在任务调度方面，也可以在任务切换的关键时刻禁止抢占，确保任务切换的正确性。<br>2、使用优先级屏蔽<br>为系统中的任务和中断设置优先级屏蔽。当一个任务或中断正在执行关键操作时，它可以设置一个优先级屏蔽值，这个屏蔽值会阻止优先级低于该屏蔽值的任务或中断的抢占或中断。例如，一个中断处理程序在更新关键数据结构时，设置一个较高的优先级屏蔽值，这样只有优先级高于该屏蔽值的中断才能打断它。</p>
+<h3 id="FreeRTOS中的信号量有哪些类型？"><a href="#FreeRTOS中的信号量有哪些类型？" class="headerlink" title="FreeRTOS中的信号量有哪些类型？"></a>FreeRTOS中的信号量有哪些类型？</h3><p>信号量常常用于控制对共享资源的访问和任务同步。FreeRTOS中有三种主要类型的信号量：二值信号量、计数信号量和递归信号量。<br>二值信号量用于锁定资源，类似于互斥锁，它们只能有两个状态：获取或释放。通常用于互斥访问或同步<br>计数信号量可以用于管理多个相同的资源，或者用来同步多个任务。<br>递归信号量是计数信号量的一种特殊形式，允许同一个任务多次获取同一个资源。</p>
+<h4 id="互斥信号量和二值信号量的区别"><a href="#互斥信号量和二值信号量的区别" class="headerlink" title="互斥信号量和二值信号量的区别"></a>互斥信号量和二值信号量的区别</h4><p>互斥信号量拥有优先级继承机制，所以只能用在任务中，不能用于中断服务函数。<br>二值信号量没有优先级继承，二值信号量其实就是一个只有一个队列项的队列，这个特殊的队列要么是满的，要么是空的。<br>因此二值信号另更适合用于同步(任务与任务或任务与中断的同步)，而互斥信号量适合用于简单的互斥访问。</p>
+<h3 id="请描述一下FreeRTOS中的优先级继承机制。"><a href="#请描述一下FreeRTOS中的优先级继承机制。" class="headerlink" title="请描述一下FreeRTOS中的优先级继承机制。"></a>请描述一下FreeRTOS中的优先级继承机制。</h3><p>优先级继承是一种避免优先级反转问题的机制。当一个低优先级任务持有一个高优先级任务需要的资源时，高优先级任务可能会被延迟执行。优先级继承机制允许低优先级任务临时继承高优先级任务的优先级，以避免高优先级任务长时间等待资源，从而减少优先级反转的影响。<br>reeRTOS中的tickless模式是什么？</p>
+<h3 id="你能解释一下FreeRTOS的tickless模式吗？"><a href="#你能解释一下FreeRTOS的tickless模式吗？" class="headerlink" title="你能解释一下FreeRTOS的tickless模式吗？"></a>你能解释一下FreeRTOS的tickless模式吗？</h3><p>tickless模式是FreeRTOS中的一种节能机制，它减少了系统时钟滴答的频率。在tickless模式下，时钟滴答的产生依赖于任务的时间需求，而不是固定频率。这意味着，如果系统中的所有任务都处于阻塞状态，或者没有任何时间敏感的操作需要执行，时钟滴答可以停止，从而减少CPU的功耗。</p>
+<h3 id="请解释任务栈的作用以及它在FreeRTOS中是如何初始化的。"><a href="#请解释任务栈的作用以及它在FreeRTOS中是如何初始化的。" class="headerlink" title="请解释任务栈的作用以及它在FreeRTOS中是如何初始化的。"></a>请解释任务栈的作用以及它在FreeRTOS中是如何初始化的。</h3><p>任务栈是为任务提供内存空间的一种机制，用于存储局部变量、函数参数、返回地址以及可能的中断上下文。在FreeRTOS中，任务栈在创建任务时通过xTaskCreate()宏进行初始化。栈的大小必须在创建任务时指定，并且通常根据任务的复杂性和需要的栈空间大小来决定。</p>
+<h4 id="如何合理地设定任务栈的大小？"><a href="#如何合理地设定任务栈的大小？" class="headerlink" title="如何合理地设定任务栈的大小？"></a>如何合理地设定任务栈的大小？</h4><p>可以先给任务设置比较大的任务栈，确保不会出现栈溢出的情况，然后让系统运行一段比较长的时间，同时尽量触发各种可能的情况。<br>可通过uxTaskGetStackHighWaterMark() 函数来查看任务最多使用了多少栈空间，一般将最终的栈大小设置为该值的1.5~2倍是比较合适的。</p>
+<h3 id="中断和任务区别"><a href="#中断和任务区别" class="headerlink" title="中断和任务区别"></a>中断和任务区别</h3><p>中断是硬件或软件触发的事件，用于快速响应外部或内部事件，通常具有固定的优先级，并且执行时间非常短。任务则是操作系统调度的基本单位，具有特定的优先级，可以执行更复杂的操作，并且可以被挂起和恢复。中断处理程序应尽可能简短，以避免影响其他任务的执行。</p>
+<h3 id="能否阐述一下轮询和事件驱动在FreeRTOS中的不同之处？"><a href="#能否阐述一下轮询和事件驱动在FreeRTOS中的不同之处？" class="headerlink" title="能否阐述一下轮询和事件驱动在FreeRTOS中的不同之处？"></a>能否阐述一下轮询和事件驱动在FreeRTOS中的不同之处？</h3><p>轮询是一种不断检查某个条件是否为真的方法，例如，检查一个变量是否有变化。而事件驱动是一种基于事件来触发动作的机制。在FreeRTOS中，通常推荐使用事件驱动的方法，因为它可以更有效地使用CPU资源，并且可以避免忙等待。事件驱动允许任务在事件发生时被唤醒，而不是不断地检查某个条件。</p>
+<h3 id="在FreeRTOS中，静态内存分配和动态内存分配有何不同？"><a href="#在FreeRTOS中，静态内存分配和动态内存分配有何不同？" class="headerlink" title="在FreeRTOS中，静态内存分配和动态内存分配有何不同？"></a>在FreeRTOS中，静态内存分配和动态内存分配有何不同？</h3><p>静态内存分配是在编译时确定的，通常用于创建固定大小的内存块，如任务栈和队列。动态内存分配则是在运行时进行的，允许根据需要分配和释放内存。FreeRTOS提供了多种动态内存管理方案，包括使用可变大小的内存块和使用固定大小的内存池。动态内存分配更加灵活，但可能会增加运行时的开销。</p>
+<h3 id="在使用FreeRTOS处理中断时，中断优先级有哪些需要特别注意的地方？"><a href="#在使用FreeRTOS处理中断时，中断优先级有哪些需要特别注意的地方？" class="headerlink" title="在使用FreeRTOS处理中断时，中断优先级有哪些需要特别注意的地方？"></a>在使用FreeRTOS处理中断时，中断优先级有哪些需要特别注意的地方？</h3><p>在配置中断优先级时，需要确保不会与任务优先级发生冲突。中断优先级应该设置得足够高，以确保能够及时响应外部事件，但也不能太高，以免影响任务的调度。此外，还需要注意中断服务例程中执行的操作应该尽可能简短，避免长时间的中断处理影响系统的响应性和稳定性。</p>
+<h3 id="前后台程序与实时操作系统的区别是什么？"><a href="#前后台程序与实时操作系统的区别是什么？" class="headerlink" title="前后台程序与实时操作系统的区别是什么？"></a>前后台程序与实时操作系统的区别是什么？</h3><p>前后台程序：在前后台系统中，通常只有一个后台任务和一个前台任务。前台任务响应中断或事件，而后台任务则在没有事件时运行。整个系统结构简单，但对时间敏感的任务响应较差。<br>实时操作系统：在实时操作系统（RTOS）中，多个任务可以被调度，系统通过任务调度器管理任务的执行顺序。RTOS可以保证高优先级任务得到及时的处理，更适合复杂系统中的实时响应需求。</p>
+<h3 id="一个参数可以同时是const和volatile吗？为什么？"><a href="#一个参数可以同时是const和volatile吗？为什么？" class="headerlink" title="一个参数可以同时是const和volatile吗？为什么？"></a>一个参数可以同时是const和volatile吗？为什么？</h3><p>可以。<br>const强调的是程序代码层面的常量性，即程序员承诺不会在代码里对该变量的值进行修改。编译器会对这种承诺进行检查，若代码尝试修改const修饰的变量，就会报错。<br>volatile关注的是变量值改变的不可预测性，它告诉编译器该变量的值可能会以编译器无法预知的方式被改变，例如来自硬件设备的修改、多线程中其他线程的修改等。所以编译器不会对volatile修饰的变量进行优化，保证每次访问的都是变量的最新值。<br>例如：在嵌入式系统里，一个指向硬件只读寄存器的指针，就可将其指向的内容声明为const volatile，既表明代码不会修改该寄存器值，又能确保每次读取到的是硬件实时状态。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>FreeRtos</div>
+      <div>http://example.com/2025/05/11/rtos/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>JohnTino</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年5月11日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/05/27/%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/" title="智能指针">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">智能指针</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/05/10/Linux%E5%85%AB%E8%82%A1/" title="Linux八股笔记">
+                        <span class="hidden-mobile">Linux八股笔记</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/runtime.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/DynamicLine.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/snowflake.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/Cherry.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/star.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/containsWord.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/love.min.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<!-- hexo injector body_end start --><script src="/js/backgroundize.js"></script>
+  <link defer rel="stylesheet" href="/css/backgroundize.css" />
+  <!-- hexo injector body_end end --></body>
+</html>
