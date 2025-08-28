@@ -1,0 +1,667 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="referrer" content="no-referrer" />
+  
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="JohnTino">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一个记录STM32外设通信协议知识点的博客。 STM32秋招八股通信方式分类123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858">
+<meta property="og:type" content="article">
+<meta property="og:title" content="STM32笔记">
+<meta property="og:url" content="http://example.com/2025/04/06/%E5%9B%BE%E5%83%8F%E5%88%87%E7%89%87%E4%B8%8ERKNN%E5%A4%A7%E5%9B%BE%E5%90%88%E6%88%90%E6%8E%A8%E7%90%86/index.html">
+<meta property="og:site_name" content="JohnTino&#39;s Blog">
+<meta property="og:description" content="一个记录STM32外设通信协议知识点的博客。 STM32秋招八股通信方式分类123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/post/6.jpg">
+<meta property="article:published_time" content="2025-04-06T13:00:00.000Z">
+<meta property="article:modified_time" content="2025-07-28T01:24:41.964Z">
+<meta property="article:author" content="JohnTino">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/post/6.jpg">
+  
+  
+  
+  <title>STM32笔记 - JohnTino&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/scroll.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body><!-- hexo injector body_begin start --><div id="web_bg"></div><!-- hexo injector body_begin end -->
+  
+
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <!-- <strong>JohnTino&#39;s Blog</strong> -->
+
+      <!-- 2025-7-14 -->
+      <strong class="navbar-title">JohnTino&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="STM32笔记"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-04-06 21:00" pubdate>
+          2025年4月6日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          18 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+    <script>
+      var OriginTitile = document.title;
+      var titleTime;
+      document.addEventListener('visibilitychange', function () {
+        if (document.hidden) {
+          // 离开当前页面时标签显示内容
+          document.title = '青山一片云雾';
+          clearTimeout(titleTime);
+        } else {
+          // 返回当前页面时标签显示内容
+          document.title = '心安即归处';
+          // 两秒后变回正常标题
+          titleTime = setTimeout(function () {
+            document.title = OriginTitile;
+          }, 2000);
+        }
+      });
+    </script>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">STM32笔记</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>一个记录STM32外设通信协议知识点的博客。</p>
+<h2 id="STM32秋招八股"><a href="#STM32秋招八股" class="headerlink" title="STM32秋招八股"></a>STM32秋招八股</h2><h3 id="通信方式分类"><a href="#通信方式分类" class="headerlink" title="通信方式分类"></a>通信方式分类</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br><span class="line">448</span><br><span class="line">449</span><br><span class="line">450</span><br><span class="line">451</span><br><span class="line">452</span><br><span class="line">453</span><br><span class="line">454</span><br><span class="line">455</span><br><span class="line">456</span><br><span class="line">457</span><br><span class="line">458</span><br><span class="line">459</span><br><span class="line">460</span><br><span class="line">461</span><br><span class="line">462</span><br><span class="line">463</span><br><span class="line">464</span><br><span class="line">465</span><br><span class="line">466</span><br><span class="line">467</span><br><span class="line">468</span><br><span class="line">469</span><br><span class="line">470</span><br><span class="line">471</span><br><span class="line">472</span><br><span class="line">473</span><br><span class="line">474</span><br><span class="line">475</span><br><span class="line">476</span><br><span class="line">477</span><br><span class="line">478</span><br><span class="line">479</span><br><span class="line">480</span><br><span class="line">481</span><br><span class="line">482</span><br><span class="line">483</span><br><span class="line">484</span><br><span class="line">485</span><br><span class="line">486</span><br><span class="line">487</span><br><span class="line">488</span><br><span class="line">489</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os<br><span class="hljs-keyword">import</span> urllib<br><span class="hljs-keyword">import</span> traceback<br><span class="hljs-keyword">import</span> time<br><span class="hljs-keyword">import</span> sys<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">import</span> cv2<br><span class="hljs-keyword">from</span> rknn.api <span class="hljs-keyword">import</span> RKNN<br><br><span class="hljs-comment"># Model from https://github.com/airockchip/rknn_model_zoo</span><br>ONNX_MODEL = <span class="hljs-string">&#x27;/home/rk/vscode_ws/onnxrknn/0726.onnx&#x27;</span><br>RKNN_MODEL = <span class="hljs-string">&#x27;/home/rk/vscode_ws/onnxrknn/0726.rknn&#x27;</span><br>IMG_PATH = <span class="hljs-string">&#x27;/home/rk/vscode_ws/onnxrknn/2.jpg&#x27;</span><br>DATASET =  <span class="hljs-string">&#x27;/home/rk/vscode_ws/onnxrknn/yolov8n.txt&#x27;</span><br><br>QUANTIZE_ON = <span class="hljs-literal">True</span><br><br>OBJ_THRESH = <span class="hljs-number">0.25</span><br>NMS_THRESH = <span class="hljs-number">0.45</span><br>IMG_SIZE = <span class="hljs-number">640</span><br><br>CLASSES = (<br>        <span class="hljs-string">&quot;s&quot;</span><br>        )<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">xywh2xyxy</span>(<span class="hljs-params">x</span>):<br>    <span class="hljs-comment"># Convert [x, y, w, h] to [x1, y1, x2, y2]</span><br>    y = np.copy(x)<br>    y[:, <span class="hljs-number">0</span>] = x[:, <span class="hljs-number">0</span>] - x[:, <span class="hljs-number">2</span>] / <span class="hljs-number">2</span>  <span class="hljs-comment"># top left x</span><br>    y[:, <span class="hljs-number">1</span>] = x[:, <span class="hljs-number">1</span>] - x[:, <span class="hljs-number">3</span>] / <span class="hljs-number">2</span>  <span class="hljs-comment"># top left y</span><br>    y[:, <span class="hljs-number">2</span>] = x[:, <span class="hljs-number">0</span>] + x[:, <span class="hljs-number">2</span>] / <span class="hljs-number">2</span>  <span class="hljs-comment"># bottom right x</span><br>    y[:, <span class="hljs-number">3</span>] = x[:, <span class="hljs-number">1</span>] + x[:, <span class="hljs-number">3</span>] / <span class="hljs-number">2</span>  <span class="hljs-comment"># bottom right y</span><br>    <span class="hljs-keyword">return</span> y<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">process</span>(<span class="hljs-params"><span class="hljs-built_in">input</span>, mask, anchors</span>):<br><br>    anchors = [anchors[i] <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> mask]<br>    grid_h, grid_w = <span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>, <span class="hljs-built_in">input</span>.shape[<span class="hljs-number">0</span>:<span class="hljs-number">2</span>])<br><br>    box_confidence = <span class="hljs-built_in">input</span>[..., <span class="hljs-number">4</span>]<br>    box_confidence = np.expand_dims(box_confidence, axis=-<span class="hljs-number">1</span>)<br><br>    box_class_probs = <span class="hljs-built_in">input</span>[..., <span class="hljs-number">5</span>:]<br><br>    box_xy = <span class="hljs-built_in">input</span>[..., :<span class="hljs-number">2</span>]*<span class="hljs-number">2</span> - <span class="hljs-number">0.5</span><br><br>    col = np.tile(np.arange(<span class="hljs-number">0</span>, grid_w), grid_w).reshape(-<span class="hljs-number">1</span>, grid_w)<br>    row = np.tile(np.arange(<span class="hljs-number">0</span>, grid_h).reshape(-<span class="hljs-number">1</span>, <span class="hljs-number">1</span>), grid_h)<br>    col = col.reshape(grid_h, grid_w, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>).repeat(<span class="hljs-number">3</span>, axis=-<span class="hljs-number">2</span>)<br>    row = row.reshape(grid_h, grid_w, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>).repeat(<span class="hljs-number">3</span>, axis=-<span class="hljs-number">2</span>)<br>    grid = np.concatenate((col, row), axis=-<span class="hljs-number">1</span>)<br>    box_xy += grid<br>    box_xy *= <span class="hljs-built_in">int</span>(IMG_SIZE/grid_h)<br><br>    box_wh = <span class="hljs-built_in">pow</span>(<span class="hljs-built_in">input</span>[..., <span class="hljs-number">2</span>:<span class="hljs-number">4</span>]*<span class="hljs-number">2</span>, <span class="hljs-number">2</span>)<br>    box_wh = box_wh * anchors<br><br>    box = np.concatenate((box_xy, box_wh), axis=-<span class="hljs-number">1</span>)<br><br>    <span class="hljs-keyword">return</span> box, box_confidence, box_class_probs<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">filter_boxes</span>(<span class="hljs-params">boxes, box_confidences, box_class_probs</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;Filter boxes with box threshold. It&#x27;s a bit different with origin yolov5 post process!</span><br><span class="hljs-string"></span><br><span class="hljs-string">    # Arguments</span><br><span class="hljs-string">        boxes: ndarray, boxes of objects.</span><br><span class="hljs-string">        box_confidences: ndarray, confidences of objects.</span><br><span class="hljs-string">        box_class_probs: ndarray, class_probs of objects.</span><br><span class="hljs-string"></span><br><span class="hljs-string">    # Returns</span><br><span class="hljs-string">        boxes: ndarray, filtered boxes.</span><br><span class="hljs-string">        classes: ndarray, classes for boxes.</span><br><span class="hljs-string">        scores: ndarray, scores for boxes.</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    boxes = boxes.reshape(-<span class="hljs-number">1</span>, <span class="hljs-number">4</span>)<br>    box_confidences = box_confidences.reshape(-<span class="hljs-number">1</span>)<br>    box_class_probs = box_class_probs.reshape(-<span class="hljs-number">1</span>, box_class_probs.shape[-<span class="hljs-number">1</span>])<br><br>    _box_pos = np.where(box_confidences &gt;= OBJ_THRESH)<br>    boxes = boxes[_box_pos]<br>    box_confidences = box_confidences[_box_pos]<br>    box_class_probs = box_class_probs[_box_pos]<br><br>    class_max_score = np.<span class="hljs-built_in">max</span>(box_class_probs, axis=-<span class="hljs-number">1</span>)<br>    classes = np.argmax(box_class_probs, axis=-<span class="hljs-number">1</span>)<br>    _class_pos = np.where(class_max_score &gt;= OBJ_THRESH)<br><br>    boxes = boxes[_class_pos]<br>    classes = classes[_class_pos]<br>    scores = (class_max_score* box_confidences)[_class_pos]<br><br>    <span class="hljs-keyword">return</span> boxes, classes, scores<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">nms_boxes</span>(<span class="hljs-params">boxes, scores</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;Suppress non-maximal boxes.</span><br><span class="hljs-string"></span><br><span class="hljs-string">    # Arguments</span><br><span class="hljs-string">        boxes: ndarray, boxes of objects.</span><br><span class="hljs-string">        scores: ndarray, scores of objects.</span><br><span class="hljs-string"></span><br><span class="hljs-string">    # Returns</span><br><span class="hljs-string">        keep: ndarray, index of effective boxes.</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    x = boxes[:, <span class="hljs-number">0</span>]<br>    y = boxes[:, <span class="hljs-number">1</span>]<br>    w = boxes[:, <span class="hljs-number">2</span>] - boxes[:, <span class="hljs-number">0</span>]<br>    h = boxes[:, <span class="hljs-number">3</span>] - boxes[:, <span class="hljs-number">1</span>]<br><br>    areas = w * h<br>    order = scores.argsort()[::-<span class="hljs-number">1</span>]<br><br>    keep = []<br>    <span class="hljs-keyword">while</span> order.size &gt; <span class="hljs-number">0</span>:<br>        i = order[<span class="hljs-number">0</span>]<br>        keep.append(i)<br><br>        xx1 = np.maximum(x[i], x[order[<span class="hljs-number">1</span>:]])<br>        yy1 = np.maximum(y[i], y[order[<span class="hljs-number">1</span>:]])<br>        xx2 = np.minimum(x[i] + w[i], x[order[<span class="hljs-number">1</span>:]] + w[order[<span class="hljs-number">1</span>:]])<br>        yy2 = np.minimum(y[i] + h[i], y[order[<span class="hljs-number">1</span>:]] + h[order[<span class="hljs-number">1</span>:]])<br><br>        w1 = np.maximum(<span class="hljs-number">0.0</span>, xx2 - xx1 + <span class="hljs-number">0.00001</span>)<br>        h1 = np.maximum(<span class="hljs-number">0.0</span>, yy2 - yy1 + <span class="hljs-number">0.00001</span>)<br>        inter = w1 * h1<br><br>        ovr = inter / (areas[i] + areas[order[<span class="hljs-number">1</span>:]] - inter)<br>        inds = np.where(ovr &lt;= NMS_THRESH)[<span class="hljs-number">0</span>]<br>        order = order[inds + <span class="hljs-number">1</span>]<br>    keep = np.array(keep)<br>    <span class="hljs-keyword">return</span> keep<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">dfl</span>(<span class="hljs-params">position</span>):<br>    <span class="hljs-comment"># Distribution Focal Loss (DFL)</span><br>    <span class="hljs-keyword">import</span> torch<br>    x = torch.tensor(position)<br>    n,c,h,w = x.shape<br>    p_num = <span class="hljs-number">4</span><br>    mc = c//p_num<br>    y = x.reshape(n,p_num,mc,h,w)<br>    y = y.softmax(<span class="hljs-number">2</span>)<br>    acc_metrix = torch.tensor(<span class="hljs-built_in">range</span>(mc)).<span class="hljs-built_in">float</span>().reshape(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,mc,<span class="hljs-number">1</span>,<span class="hljs-number">1</span>)<br>    y = (y*acc_metrix).<span class="hljs-built_in">sum</span>(<span class="hljs-number">2</span>)<br>    <span class="hljs-keyword">return</span> y.numpy()<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">box_process</span>(<span class="hljs-params">position</span>):<br>    grid_h, grid_w = position.shape[<span class="hljs-number">2</span>:<span class="hljs-number">4</span>]<br>    col, row = np.meshgrid(np.arange(<span class="hljs-number">0</span>, grid_w), np.arange(<span class="hljs-number">0</span>, grid_h))<br>    col = col.reshape(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, grid_h, grid_w)<br>    row = row.reshape(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, grid_h, grid_w)<br>    grid = np.concatenate((col, row), axis=<span class="hljs-number">1</span>)<br>    stride = np.array([IMG_SIZE//grid_h, IMG_SIZE//grid_w]).reshape(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">1</span>,<span class="hljs-number">1</span>)<br><br>    position = dfl(position)<br>    box_xy  = grid +<span class="hljs-number">0.5</span> -position[:,<span class="hljs-number">0</span>:<span class="hljs-number">2</span>,:,:]<br>    box_xy2 = grid +<span class="hljs-number">0.5</span> +position[:,<span class="hljs-number">2</span>:<span class="hljs-number">4</span>,:,:]<br>    xyxy = np.concatenate((box_xy*stride, box_xy2*stride), axis=<span class="hljs-number">1</span>)<br><br>    <span class="hljs-keyword">return</span> xyxy<br><br><span class="hljs-comment"># def letterbox(im, new_shape=(640, 640), color=(0, 0, 0)):</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">letterbox</span>(<span class="hljs-params">im, new_shape=(<span class="hljs-params"><span class="hljs-number">640</span>, <span class="hljs-number">640</span></span>), color=(<span class="hljs-params"><span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span></span>)</span>):<br>    <span class="hljs-comment"># Resize and pad image while meeting stride-multiple constraints</span><br>    shape = im.shape[:<span class="hljs-number">2</span>]  <span class="hljs-comment"># current shape [height, width]</span><br>    <span class="hljs-keyword">if</span> <span class="hljs-built_in">isinstance</span>(new_shape, <span class="hljs-built_in">int</span>):<br>        new_shape = (new_shape, new_shape)<br><br>    <span class="hljs-comment"># Scale ratio (new / old)</span><br>    r = <span class="hljs-built_in">min</span>(new_shape[<span class="hljs-number">0</span>] / shape[<span class="hljs-number">0</span>], new_shape[<span class="hljs-number">1</span>] / shape[<span class="hljs-number">1</span>])<br><br>    <span class="hljs-comment"># Compute padding</span><br>    ratio = r, r  <span class="hljs-comment"># width, height ratios</span><br>    new_unpad = <span class="hljs-built_in">int</span>(<span class="hljs-built_in">round</span>(shape[<span class="hljs-number">1</span>] * r)), <span class="hljs-built_in">int</span>(<span class="hljs-built_in">round</span>(shape[<span class="hljs-number">0</span>] * r))<br>    dw, dh = new_shape[<span class="hljs-number">1</span>] - new_unpad[<span class="hljs-number">0</span>], new_shape[<span class="hljs-number">0</span>] - new_unpad[<span class="hljs-number">1</span>]  <span class="hljs-comment"># wh padding</span><br><br>    dw /= <span class="hljs-number">2</span>  <span class="hljs-comment"># divide padding into 2 sides</span><br>    dh /= <span class="hljs-number">2</span><br><br>    <span class="hljs-keyword">if</span> shape[::-<span class="hljs-number">1</span>] != new_unpad:  <span class="hljs-comment"># resize</span><br>        im = cv2.resize(im, new_unpad, interpolation=cv2.INTER_LINEAR)<br>    top, bottom = <span class="hljs-built_in">int</span>(<span class="hljs-built_in">round</span>(dh - <span class="hljs-number">0.1</span>)), <span class="hljs-built_in">int</span>(<span class="hljs-built_in">round</span>(dh + <span class="hljs-number">0.1</span>))<br>    left, right = <span class="hljs-built_in">int</span>(<span class="hljs-built_in">round</span>(dw - <span class="hljs-number">0.1</span>)), <span class="hljs-built_in">int</span>(<span class="hljs-built_in">round</span>(dw + <span class="hljs-number">0.1</span>))<br>    im = cv2.copyMakeBorder(im, top, bottom, left, right, cv2.BORDER_CONSTANT, value=color)  <span class="hljs-comment"># add border</span><br>    <span class="hljs-keyword">return</span> im, ratio, (dw, dh)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">post_process</span>(<span class="hljs-params">input_data</span>):<br>    boxes, scores, classes_conf = [], [], []<br>    defualt_branch=<span class="hljs-number">3</span><br>    pair_per_branch = <span class="hljs-built_in">len</span>(input_data)//defualt_branch<br>    <span class="hljs-comment"># Python 忽略 score_sum 输出</span><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(defualt_branch):<br>        boxes.append(box_process(input_data[pair_per_branch*i]))<br>        classes_conf.append(input_data[pair_per_branch*i+<span class="hljs-number">1</span>])<br>        scores.append(np.ones_like(input_data[pair_per_branch*i+<span class="hljs-number">1</span>][:,:<span class="hljs-number">1</span>,:,:], dtype=np.float32))<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">sp_flatten</span>(<span class="hljs-params">_<span class="hljs-keyword">in</span></span>):<br>        ch = _<span class="hljs-keyword">in</span>.shape[<span class="hljs-number">1</span>]<br>        _<span class="hljs-keyword">in</span> = _<span class="hljs-keyword">in</span>.transpose(<span class="hljs-number">0</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">1</span>)<br>        <span class="hljs-keyword">return</span> _<span class="hljs-keyword">in</span>.reshape(-<span class="hljs-number">1</span>, ch)<br><br>    boxes = [sp_flatten(_v) <span class="hljs-keyword">for</span> _v <span class="hljs-keyword">in</span> boxes]<br>    classes_conf = [sp_flatten(_v) <span class="hljs-keyword">for</span> _v <span class="hljs-keyword">in</span> classes_conf]<br>    scores = [sp_flatten(_v) <span class="hljs-keyword">for</span> _v <span class="hljs-keyword">in</span> scores]<br><br>    boxes = np.concatenate(boxes)<br>    classes_conf = np.concatenate(classes_conf)<br>    scores = np.concatenate(scores)<br><br>    <span class="hljs-comment"># filter according to threshold</span><br>    boxes, classes, scores = filter_boxes(boxes, scores, classes_conf)<br><br>    <span class="hljs-comment"># nms</span><br>    nboxes, nclasses, nscores = [], [], []<br>    <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> <span class="hljs-built_in">set</span>(classes):<br>        inds = np.where(classes == c)<br>        b = boxes[inds]<br>        c = classes[inds]<br>        s = scores[inds]<br>        keep = nms_boxes(b, s)<br><br>        <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(keep) != <span class="hljs-number">0</span>:<br>            nboxes.append(b[keep])<br>            nclasses.append(c[keep])<br>            nscores.append(s[keep])<br><br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> nclasses <span class="hljs-keyword">and</span> <span class="hljs-keyword">not</span> nscores:<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span>, <span class="hljs-literal">None</span>, <span class="hljs-literal">None</span><br><br>    boxes = np.concatenate(nboxes)<br>    classes = np.concatenate(nclasses)<br>    scores = np.concatenate(nscores)<br><br>    <span class="hljs-keyword">return</span> boxes, classes, scores<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">draw</span>(<span class="hljs-params">image, boxes, scores, classes</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;Draw the boxes on the image with boundary checks.&quot;&quot;&quot;</span><br>    height, width = image.shape[:<span class="hljs-number">2</span>]  <span class="hljs-comment"># 获取图像尺寸</span><br>    <br>    <span class="hljs-keyword">for</span> box, score, cl <span class="hljs-keyword">in</span> <span class="hljs-built_in">zip</span>(boxes, scores, classes):<br>        <span class="hljs-comment"># 确保坐标是整数且在图像范围内</span><br>        x1, y1, x2, y2 = [<span class="hljs-built_in">int</span>(coord) <span class="hljs-keyword">for</span> coord <span class="hljs-keyword">in</span> box]<br>        x1 = <span class="hljs-built_in">max</span>(<span class="hljs-number">0</span>, <span class="hljs-built_in">min</span>(x1, width - <span class="hljs-number">1</span>))    <span class="hljs-comment"># 限制在 [0, width-1]</span><br>        y1 = <span class="hljs-built_in">max</span>(<span class="hljs-number">0</span>, <span class="hljs-built_in">min</span>(y1, height - <span class="hljs-number">1</span>))   <span class="hljs-comment"># 限制在 [0, height-1]</span><br>        x2 = <span class="hljs-built_in">max</span>(<span class="hljs-number">0</span>, <span class="hljs-built_in">min</span>(x2, width - <span class="hljs-number">1</span>))<br>        y2 = <span class="hljs-built_in">max</span>(<span class="hljs-number">0</span>, <span class="hljs-built_in">min</span>(y2, height - <span class="hljs-number">1</span>))<br><br>        <span class="hljs-comment"># 确保文字不会超出图像顶部</span><br>        text_y = <span class="hljs-built_in">max</span>(<span class="hljs-number">10</span>, y1 - <span class="hljs-number">6</span>)  <span class="hljs-comment"># 至少距离顶部10像素</span><br>        <br>        <span class="hljs-comment"># 绘制检测框（绿色，线宽1）</span><br>        cv2.rectangle(image, (x1, y1), (x2, y2), (<span class="hljs-number">0</span>, <span class="hljs-number">255</span>, <span class="hljs-number">0</span>), <span class="hljs-number">1</span>)<br>        <br>        <span class="hljs-comment"># 绘制类别和置信度（字体更小，避免溢出）</span><br>        cv2.putText(image, <br>                    <span class="hljs-string">f&#x27;<span class="hljs-subst">&#123;CLASSES[cl]&#125;</span> <span class="hljs-subst">&#123;score:<span class="hljs-number">.2</span>f&#125;</span>&#x27;</span>,<br>                    (x1, text_y), <br>                    cv2.FONT_HERSHEY_SIMPLEX, <br>                    <span class="hljs-number">0.3</span>,  <span class="hljs-comment"># 更小的字体大小</span><br>                    (<span class="hljs-number">0</span>, <span class="hljs-number">255</span>, <span class="hljs-number">0</span>), <br>                    <span class="hljs-number">1</span>, <br>                    cv2.LINE_AA)<br>        <br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;<span class="hljs-subst">&#123;CLASSES[cl]&#125;</span> @ (<span class="hljs-subst">&#123;x1&#125;</span> <span class="hljs-subst">&#123;y1&#125;</span> <span class="hljs-subst">&#123;x2&#125;</span> <span class="hljs-subst">&#123;y2&#125;</span>) <span class="hljs-subst">&#123;score:<span class="hljs-number">.3</span>f&#125;</span>&quot;</span>)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">slice_image</span>(<span class="hljs-params">image, slice_size=<span class="hljs-number">640</span>, overlap_ratio=<span class="hljs-number">0.2</span></span>):<br>    <span class="hljs-string">&quot;&quot;&quot;将图像切分为6个640x640的重叠切片。&quot;&quot;&quot;</span><br>    h, w = image.shape[:<span class="hljs-number">2</span>]<br>    slices = []<br>    coords = [] <span class="hljs-comment"># 存储每个切片的原始图像坐标 [x_min, y_min, x_max, y_max]</span><br><br>    <span class="hljs-comment"># 定义切片区域，确保重叠</span><br>    <span class="hljs-comment"># 2x3 网格，重叠区域为 0.2</span><br>    overlap_h = <span class="hljs-built_in">int</span>(slice_size * overlap_ratio)<br>    overlap_w = <span class="hljs-built_in">int</span>(slice_size * overlap_ratio)<br><br>    <span class="hljs-comment"># 计算步长</span><br>    step_h = slice_size - overlap_h<br>    step_w = slice_size - overlap_w<br><br>    <span class="hljs-comment"># 确保至少有2行3列的切片</span><br>    num_rows = <span class="hljs-number">2</span><br>    num_cols = <span class="hljs-number">3</span><br><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(num_rows):<br>        <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(num_cols):<br>            y_min = i * step_h<br>            x_min = j * step_w<br><br>            y_max = y_min + slice_size<br>            x_max = x_min + slice_size<br><br>            <span class="hljs-comment"># 调整边界以适应图像尺寸</span><br>            <span class="hljs-keyword">if</span> y_max &gt; h:<br>                y_max = h<br>                y_min = h - slice_size<br>            <span class="hljs-keyword">if</span> x_max &gt; w:<br>                x_max = w<br>                x_min = w - slice_size<br>            <br>            y_min = <span class="hljs-built_in">max</span>(<span class="hljs-number">0</span>, y_min)<br>            x_min = <span class="hljs-built_in">max</span>(<span class="hljs-number">0</span>, x_min)<br><br>            slice_img = image[y_min:y_max, x_min:x_max]<br>            slices.append(slice_img)<br>            coords.append((x_min, y_min, x_max, y_max))<br>    <span class="hljs-keyword">return</span> slices, coords<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">merge_and_draw_results</span>(<span class="hljs-params">original_img, all_boxes, all_classes, all_scores</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;将所有切片上的检测结果合并并绘制到原始大图上。&quot;&quot;&quot;</span><br>    result_img = original_img.copy()<br>    <span class="hljs-keyword">if</span> all_boxes <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span> <span class="hljs-keyword">or</span> <span class="hljs-built_in">len</span>(all_boxes) == <span class="hljs-number">0</span>:<br>        <span class="hljs-keyword">return</span> result_img<br><br>    <span class="hljs-comment"># 应用NMS过滤重叠的框</span><br>    <span class="hljs-comment"># 将所有检测框的坐标和分数扁平化以便进行全局NMS</span><br>    merged_boxes = np.vstack(all_boxes)<br>    merged_scores = np.concatenate(all_scores)<br>    merged_classes = np.concatenate(all_classes)<br><br>    <span class="hljs-comment"># 对所有合并的框执行NMS</span><br>    keep = nms_boxes(merged_boxes, merged_scores)<br><br>    final_boxes = merged_boxes[keep]<br>    final_classes = merged_classes[keep]<br>    final_scores = merged_scores[keep]<br>    <br>    <span class="hljs-comment"># 在原始图像上绘制最终结果</span><br>    draw(result_img, final_boxes, final_scores, final_classes)<br>    <span class="hljs-keyword">return</span> result_img<br>    <br><span class="hljs-keyword">def</span> <span class="hljs-title function_">process_video_with_rknn_slicing</span>(<span class="hljs-params">video_path, rknn_model_path, output_video_path=<span class="hljs-string">&#x27;output_video.mp4&#x27;</span>, display=<span class="hljs-literal">True</span>, IMG_SIZE=<span class="hljs-number">640</span></span>):<br>    <span class="hljs-comment"># Create RKNN object</span><br>    rknn = RKNN(verbose=<span class="hljs-literal">True</span>)<br><br>    <span class="hljs-comment"># pre-process config</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;--&gt; Config model&#x27;</span>)<br>    rknn.config(mean_values=[[<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>]], std_values=[[<span class="hljs-number">255</span>, <span class="hljs-number">255</span>, <span class="hljs-number">255</span>]], target_platform=<span class="hljs-string">&#x27;rk3568&#x27;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;done&#x27;</span>)<br><br>    <span class="hljs-comment"># Load ONNX model and build RKNN model</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;--&gt; Loading ONNX model and building RKNN model: <span class="hljs-subst">&#123;ONNX_MODEL&#125;</span>&#x27;</span>)<br>    ret = rknn.load_onnx(model=ONNX_MODEL)<br>    <span class="hljs-keyword">if</span> ret != <span class="hljs-number">0</span>:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;Load ONNX model failed!&#x27;</span>)<br>        rknn.release()<br>        <span class="hljs-keyword">return</span><br>    ret = rknn.build(do_quantization=QUANTIZE_ON, dataset=DATASET)<br>    <span class="hljs-keyword">if</span> ret != <span class="hljs-number">0</span>:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;Build RKNN model failed!&#x27;</span>)<br>        rknn.release()<br>        <span class="hljs-keyword">return</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;done&#x27;</span>)<br><br>    <span class="hljs-comment"># Init runtime environment</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;--&gt; Init runtime environment&#x27;</span>)<br>    ret = rknn.init_runtime()<br>    <span class="hljs-keyword">if</span> ret != <span class="hljs-number">0</span>:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;Init runtime environment failed!&#x27;</span>)<br>        exit(ret)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;done&#x27;</span>)<br><br>    cap = cv2.VideoCapture(video_path)<br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> cap.isOpened():<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;Error: Could not open video <span class="hljs-subst">&#123;video_path&#125;</span>&quot;</span>)<br>        rknn.release()<br>        <span class="hljs-keyword">return</span><br><br>    <span class="hljs-comment"># 获取视频帧率、宽度和高度</span><br>    fps = cap.get(cv2.CAP_PROP_FPS)<br>    frame_width = <span class="hljs-built_in">int</span>(cap.get(cv2.CAP_PROP_FRAME_WIDTH))<br>    frame_height = <span class="hljs-built_in">int</span>(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))<br>    fourcc = cv2.VideoWriter_fourcc(*<span class="hljs-string">&#x27;mp4v&#x27;</span>) <span class="hljs-comment"># 或 &#x27;XVID&#x27;</span><br>    out = cv2.VideoWriter(output_video_path, fourcc, fps, (frame_width, frame_height))<br><br>    frame_count = <span class="hljs-number">0</span><br>    <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>        ret, frame = cap.read()<br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> ret:<br>            <span class="hljs-keyword">break</span><br><br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;\nProcessing frame <span class="hljs-subst">&#123;frame_count&#125;</span>...&#x27;</span>)<br>        original_h, original_w = frame.shape[:<span class="hljs-number">2</span>]<br><br>        <span class="hljs-comment"># 1. 切片处理</span><br>        slices, coords = slice_image(frame, slice_size=IMG_SIZE, overlap_ratio=<span class="hljs-number">0.2</span>)<br>        all_frame_boxes = []<br>        all_frame_classes = []<br>        all_frame_scores = []<br><br>        <span class="hljs-keyword">for</span> i, slice_img <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(slices):<br>            x_min_slice, y_min_slice, _, _ = coords[i]<br><br>            <span class="hljs-comment"># 预处理 - 转换为RGB并进行letterbox处理(缩放到640×640)</span><br>            img_rgb = cv2.cvtColor(slice_img, cv2.COLOR_BGR2RGB)<br>            img_resized, ratio, (dw, dh) = letterbox(img_rgb, new_shape=(IMG_SIZE, IMG_SIZE))<br>            <br>            <span class="hljs-comment"># 准备模型输入(必须是640×640)</span><br>            img_input = img_resized.astype(np.float32)<br>            img_input = np.expand_dims(img_input, <span class="hljs-number">0</span>)  <span class="hljs-comment"># (1,640,640,3)</span><br><br>            <span class="hljs-comment"># 推理</span><br>            outputs = rknn.inference(inputs=[img_input])<br><br>            <span class="hljs-comment"># 后处理</span><br>            boxes, classes, scores = post_process(outputs)<br><br>            <span class="hljs-keyword">if</span> boxes <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>:<br>                <span class="hljs-comment"># 坐标转换：将切片内的坐标映射回原始大图坐标</span><br>                <span class="hljs-comment"># 计算实际缩放比例和填充</span><br>                new_unpad_w = <span class="hljs-built_in">int</span>(<span class="hljs-built_in">round</span>(slice_img.shape[<span class="hljs-number">1</span>] * ratio[<span class="hljs-number">0</span>]))<br>                new_unpad_h = <span class="hljs-built_in">int</span>(<span class="hljs-built_in">round</span>(slice_img.shape[<span class="hljs-number">0</span>] * ratio[<span class="hljs-number">1</span>]))<br>                <br>                <span class="hljs-comment"># 修正坐标转换</span><br>                boxes[:, [<span class="hljs-number">0</span>, <span class="hljs-number">2</span>]] -= dw  <span class="hljs-comment"># 减去宽度方向的填充</span><br>                boxes[:, [<span class="hljs-number">1</span>, <span class="hljs-number">3</span>]] -= dh  <span class="hljs-comment"># 减去高度方向的填充</span><br>                boxes[:, :<span class="hljs-number">4</span>] /= ratio[<span class="hljs-number">0</span>]  <span class="hljs-comment"># 缩放到原始切片尺寸</span><br><br>                <span class="hljs-comment"># 将切片坐标转换为原始图像坐标</span><br>                boxes[:, [<span class="hljs-number">0</span>, <span class="hljs-number">2</span>]] += x_min_slice<br>                boxes[:, [<span class="hljs-number">1</span>, <span class="hljs-number">3</span>]] += y_min_slice<br><br>                <span class="hljs-comment"># 确保坐标不超出原始图像范围</span><br>                boxes[:, [<span class="hljs-number">0</span>, <span class="hljs-number">2</span>]] = boxes[:, [<span class="hljs-number">0</span>, <span class="hljs-number">2</span>]].clip(<span class="hljs-number">0</span>, original_w)<br>                boxes[:, [<span class="hljs-number">1</span>, <span class="hljs-number">3</span>]] = boxes[:, [<span class="hljs-number">1</span>, <span class="hljs-number">3</span>]].clip(<span class="hljs-number">0</span>, original_h)<br>                <br>                all_frame_boxes.append(boxes)<br>                all_frame_classes.append(classes)<br>                all_frame_scores.append(scores)<br>        <br>        <span class="hljs-comment"># 2. 合并所有切片的检测结果并绘制到原始帧上</span><br>        <span class="hljs-keyword">if</span> all_frame_boxes:<br>            merged_frame = merge_and_draw_results(frame, all_frame_boxes, all_frame_classes, all_frame_scores)<br>        <span class="hljs-keyword">else</span>:<br>            merged_frame = frame.copy()<br><br>        <span class="hljs-comment"># 3. 将处理后的帧写入输出视频</span><br>        out.write(merged_frame)<br><br>        <span class="hljs-comment"># 可选：显示预览</span><br>        <span class="hljs-comment"># if display:</span><br>        <span class="hljs-comment">#     cv2.imshow(&#x27;Video Stream Inference&#x27;, merged_frame)</span><br>        <span class="hljs-comment">#     if cv2.waitKey(1) &amp; 0xFF == ord(&#x27;q&#x27;):</span><br>        <span class="hljs-comment">#         break</span><br><br>        frame_count += <span class="hljs-number">1</span><br><br>    <span class="hljs-comment"># 释放资源</span><br>    cap.release()<br>    out.release()<br>    <span class="hljs-keyword">if</span> display:<br>        cv2.destroyAllWindows()<br>    rknn.release()<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;Processing finished. Output video saved to <span class="hljs-subst">&#123;output_video_path&#125;</span>&#x27;</span>)<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    <span class="hljs-comment"># 在这里调用主函数来处理视频流</span><br>    <span class="hljs-comment"># 例如：</span><br>    VIDEO_PATH = <span class="hljs-string">&#x27;video1.mp4&#x27;</span> <span class="hljs-comment"># 替换为你的视频文件路径或摄像头ID（如0）</span><br>    RKNN_MODEL = <span class="hljs-string">&#x27;/home/rk/vscode_ws/onnxrknn/0726.rknn&#x27;</span> <span class="hljs-comment"># 替换为你的RKNN模型路径</span><br>    OUTPUT_VIDEO_PATH = <span class="hljs-string">&#x27;output_tracked_video.mp4&#x27;</span><br><br>    <span class="hljs-comment"># 确保RKNN模型文件存在，如果不存在，则先进行模型转换和导出</span><br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> os.path.exists(RKNN_MODEL):<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;RKNN model <span class="hljs-subst">&#123;RKNN_MODEL&#125;</span> not found. Attempting to build from ONNX.&quot;</span>)<br>        <span class="hljs-comment"># 检查ONNX_MODEL是否存在</span><br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> os.path.exists(ONNX_MODEL):<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;Error: ONNX model <span class="hljs-subst">&#123;ONNX_MODEL&#125;</span> not found. Please provide a valid ONNX model or RKNN model.&quot;</span>)<br>            sys.exit(<span class="hljs-number">1</span>)<br><br>        rknn_builder = RKNN(verbose=<span class="hljs-literal">True</span>)<br>        rknn_builder.config(mean_values=[[<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>]], std_values=[[<span class="hljs-number">255</span>, <span class="hljs-number">255</span>, <span class="hljs-number">255</span>]], target_platform=<span class="hljs-string">&#x27;rk3568&#x27;</span>)<br>        ret = rknn_builder.load_onnx(model=ONNX_MODEL)<br>        <span class="hljs-keyword">if</span> ret != <span class="hljs-number">0</span>:<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;Load ONNX model failed!&#x27;</span>)<br>            sys.exit(ret)<br>        ret = rknn_builder.build(do_quantization=QUANTIZE_ON, dataset=DATASET, target=<span class="hljs-string">&#x27;rk3568&#x27;</span>)<br>        <span class="hljs-keyword">if</span> ret != <span class="hljs-number">0</span>:<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;Build RKNN model failed!&#x27;</span>)<br>            sys.exit(ret)<br>        ret = rknn_builder.export_rknn(RKNN_MODEL)<br>        <span class="hljs-keyword">if</span> ret != <span class="hljs-number">0</span>:<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;Export RKNN model failed!&#x27;</span>)<br>            sys.exit(ret)<br>        rknn_builder.release()<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;RKNN model saved to <span class="hljs-subst">&#123;RKNN_MODEL&#125;</span>&quot;</span>)<br><br>    <span class="hljs-comment"># 运行视频处理</span><br>    process_video_with_rknn_slicing(VIDEO_PATH, RKNN_MODEL, output_video_path=OUTPUT_VIDEO_PATH, display=<span class="hljs-literal">True</span>)<br></code></pre></td></tr></table></figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>STM32笔记</div>
+      <div>http://example.com/2025/04/06/图像切片与RKNN大图合成推理/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>JohnTino</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年4月6日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/04/06/STM32/" title="STM32笔记">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">STM32笔记</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/runtime.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/DynamicLine.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/snowflake.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/Cherry.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/star.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/containsWord.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/love.min.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<!-- hexo injector body_end start --><script src="/js/backgroundize.js"></script>
+  <link defer rel="stylesheet" href="/css/backgroundize.css" />
+  <!-- hexo injector body_end end --></body>
+</html>
