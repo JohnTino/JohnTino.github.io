@@ -29,7 +29,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/post/5.png">
 <meta property="article:published_time" content="2025-05-10T01:00:00.000Z">
-<meta property="article:modified_time" content="2025-09-03T05:15:44.153Z">
+<meta property="article:modified_time" content="2025-09-03T05:30:31.300Z">
 <meta property="article:author" content="JohnTino">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/img/post/5.png">
@@ -245,7 +245,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          22k 字
+          23k 字
         
       </span>
     
@@ -256,7 +256,7 @@
         
         
         
-          187 分钟
+          191 分钟
         
       </span>
     
@@ -535,6 +535,76 @@
 <h3 id="什么是交叉编译？"><a href="#什么是交叉编译？" class="headerlink" title="什么是交叉编译？"></a>什么是交叉编译？</h3><p>在一种计算机环境中运行的编译程序，能编译出在另外一种环境下运行的代码，我们就称这种编译器支持交叉编译。这个编译过程就叫交叉编译。简单地说，就是在一个平台上生成另一个平台上的可执行代码。这里需要注意的是所谓平台，实际上包含两个概念：体系结构（Architecture）、操作系统（OperatingSystem）。同一个体系结构可以运行不同的操作系统；同样，同一个操作系统也可以在不同的体系结构上运行。举例来说，我们常说的x86 Linux平台实际上是Intel x86体系结构和Linux for x86操作系统的统称；而x86 WinNT平台实际上是Intel x86体系结构和Windows NT for x86操作系统的简称。</p>
 <h3 id="为什么需要交叉编译？"><a href="#为什么需要交叉编译？" class="headerlink" title="为什么需要交叉编译？"></a>为什么需要交叉编译？</h3><p>有时是因为目的平台上不允许或不能够安装我们所需要的编译器，而我们又需要这个编译器的某些特征；有时是因为目的平台上的资源贫乏，无法运行我们所需要编译器，只发送可执行代码；有时又是因为目的平台还没有建立，连操作系统都没有，根本谈不上运行什么编译器。<br>如何实现？  .&#x2F;configure 配库，像opengl、gstreamer;  make;  make install</p>
 <h3 id="SoC出现段错误，如何快速定位到故障函数？"><a href="#SoC出现段错误，如何快速定位到故障函数？" class="headerlink" title="SoC出现段错误，如何快速定位到故障函数？"></a>SoC出现段错误，如何快速定位到故障函数？</h3><p>出现段错误的原因：访问空指针或未初始化的指针；指针越界访问；栈溢出（如递归过深或局部变量过大）；动态内存释放后再次访问。<br>排查错误：使用调试工具（如GDB、Valgrind）找出崩溃点；结合硬件相关特性（如寄存器地址）分析原因；采用动态和静态分析工具排查潜在问题；优化代码结构和测试环境，防止类似问题再次发生。</p>
+<h3 id="NAND-Flash和NOR-Flash区别"><a href="#NAND-Flash和NOR-Flash区别" class="headerlink" title="NAND Flash和NOR Flash区别"></a>NAND Flash和NOR Flash区别</h3><p>NAND Flash和NOR Flash是两种常见的非易失性存储器技术，它们都可以用来存储数据，即使在断电的情况下数据也不会丢失。简单来说，NOR Flash像 “内存”，可以随机访问，直接运行代码，但容量小、价格贵。NAND Flash 像 “硬盘”，按块访问，速度快、容量大、价格便宜，适合大容量存储。</p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>NOR Flash</th>
+<th>NAND Flash</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>架构</td>
+<td>并行架构，内存单元直接连接到地址和数据线。</td>
+<td>串联架构，内存单元像链子一样连接起来，共享接口。</td>
+</tr>
+<tr>
+<td>访问方式</td>
+<td>随机访问 (Random Access)</td>
+<td>顺序访问 (Sequential Access)</td>
+</tr>
+<tr>
+<td></td>
+<td>可以像RAM一样，直接通过地址访问任何一个字节。</td>
+<td>必须以页(Page) 为单位进行读写，以块(Block) 为单位进行擦除。</td>
+</tr>
+<tr>
+<td>执行代码 (XIP)</td>
+<td>可以。CPU可以直接从NOR中取指令并执行，无需拷贝到RAM。</td>
+<td>不可以。代码必须先从NAND拷贝到RAM中，然后CPU才能执行。</td>
+</tr>
+<tr>
+<td>读取速度</td>
+<td>快。尤其是随机读取速度极快。</td>
+<td>慢。随机读取慢，但连续读取速度尚可。</td>
+</tr>
+<tr>
+<td>写入&#x2F;擦除速度</td>
+<td>慢。擦除和写入的速度很慢。</td>
+<td>非常快。比NOR快一个数量级，尤其是顺序写入。</td>
+</tr>
+<tr>
+<td>容量</td>
+<td>小 (通常 1Mb - 1Gb)。受限于并行接口，容量难以做大。</td>
+<td>大 (通常 1Gb - 1Tb+)。串联结构更紧凑，易于实现高密度。</td>
+</tr>
+<tr>
+<td>成本 (每比特)</td>
+<td>高。芯片面积大，结构相对复杂。</td>
+<td>低。结构紧凑，die size小，成本优势巨大。</td>
+</tr>
+<tr>
+<td>耐用性 (寿命)</td>
+<td>擦写次数高，约 10万 - 100万次。</td>
+<td>擦写次数较低，约 1千 - 10万次 (SLC&#x2F;MLC&#x2F;TLC&#x2F;QLC依次降低)。</td>
+</tr>
+<tr>
+<td>接口</td>
+<td>独立地址和数据线，与SRAM接口类似，易于连接。</td>
+<td>复用的I&#x2F;O接口 (如8个引脚)，地址、数据和命令都通过它传输，设计复杂。</td>
+</tr>
+<tr>
+<td>主要用途</td>
+<td>存储少量代码：如BIOS&#x2F;UEFI、Bootloader、嵌入式系统固件、操作系统内核、关键驱动。</td>
+<td>存储大量数据：如SSD、eMMC&#x2F;UFS、SD&#x2F;TF卡、手机存储、USB闪存盘。</td>
+</tr>
+<tr>
+<td>坏块处理</td>
+<td>无 或 极少。出厂时几乎没有坏块。</td>
+<td>有。出厂时就存在一定比例的坏块，需要坏块管理(BBM) 和损耗均衡(WL) 算法。</td>
+</tr>
+</tbody></table>
 
                 
               </div>
