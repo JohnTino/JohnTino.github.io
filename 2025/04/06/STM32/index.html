@@ -29,7 +29,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/post/6.jpg">
 <meta property="article:published_time" content="2025-04-06T13:00:00.000Z">
-<meta property="article:modified_time" content="2025-09-03T04:39:03.414Z">
+<meta property="article:modified_time" content="2025-09-03T05:42:00.159Z">
 <meta property="article:author" content="JohnTino">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/img/post/6.jpg">
@@ -245,7 +245,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          18k 字
+          19k 字
         
       </span>
     
@@ -256,7 +256,7 @@
         
         
         
-          153 分钟
+          156 分钟
         
       </span>
     
@@ -320,6 +320,66 @@
 <h2 id="STM32秋招八股"><a href="#STM32秋招八股" class="headerlink" title="STM32秋招八股"></a>STM32秋招八股</h2><h3 id="通信方式分类"><a href="#通信方式分类" class="headerlink" title="通信方式分类"></a>通信方式分类</h3><h4 id="1-同步-异步传输"><a href="#1-同步-异步传输" class="headerlink" title="1.同步&#x2F;异步传输"></a>1.同步&#x2F;异步传输</h4><p>同步传输是一种典型的基于字节的输入输出，数据按每次一个字节进行传输，其传输速度低，有时钟线，时钟线保证发送和接收双方的信号能够同步起来，如I2C(SDA\SCL)，SPI(SCLK\CS\MOSI\MISO)， USART。<br>异步传输需要外界的时钟信号进行通信，是把数据字节组合起来一起发送，这种组合称之为帧，其传输速度比异步传输快，无时钟线， 波特率作为约束条件，如UART ，传输双方统一波特率，常见波特率9600&#x2F;51，115200&#x2F;STM32。  </p>
 <h4 id="2-串行-并行"><a href="#2-串行-并行" class="headerlink" title="2.串行&#x2F;并行"></a>2.串行&#x2F;并行</h4><p>外设协议如UART、IIC、SPI、RS232、RS485、CAN都是串行。<br>效率不同：并行传输效率高，一次可传输多个数据；串行传输一次可传输一个数据。<br>速度不同：大多数情况下串行速度更快     传输距离不同：并行传输适用于短距离，串行适用于长距离。  </p>
 <h4 id="3-方向-时间"><a href="#3-方向-时间" class="headerlink" title="3.方向&#x2F;时间"></a>3.方向&#x2F;时间</h4><p>全双工：在通信的任意时刻，线路上存在A到B和B到A的双向信号传输，如UART和SPI。<br>半双工：可以实现双向的通信，但不能在两个方向同时进行，必须轮流交替进行，如I2C。<br>单工：发送端只能发送信息，不能接收信息；接收端只能接收信息，不能发送信息。  </p>
+<h3 id="ROM-和-RAM-的区别"><a href="#ROM-和-RAM-的区别" class="headerlink" title="ROM 和 RAM 的区别"></a>ROM 和 RAM 的区别</h3><p>flash相当于rom，就相当于与硬盘，sram相当于ram，相当于内存，sram是内存存储程序运行时的变量、堆栈、临时数据。<br>linux上代码应该是运行到内存上的，但单片机代码是运行在flash上。</p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>ROM (只读存储器)</th>
+<th>RAM (随机存取存储器)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>中文名称</td>
+<td>只读存储器</td>
+<td>随机存取存储器</td>
+</tr>
+<tr>
+<td>易失性</td>
+<td>非易失性存储器</td>
+<td>易失性存储器</td>
+</tr>
+<tr>
+<td>断电后数据丢失</td>
+<td>断电后数据不会丢失</td>
+<td>断电后数据全部丢失</td>
+</tr>
+<tr>
+<td>功能</td>
+<td>用于永久存储重要的、不需要更改的信息。</td>
+<td>用于临时存储CPU正在处理和运算的数据。</td>
+</tr>
+<tr>
+<td>可写性</td>
+<td>在正常使用中只能读取，不能轻易写入。</td>
+<td>可读可写，数据可以随时被CPU读取或更改。</td>
+</tr>
+<tr>
+<td>速度</td>
+<td>相对较慢</td>
+<td>非常快</td>
+</tr>
+<tr>
+<td>容量</td>
+<td>在计算机中，容量通常较小（几MB到几GB）</td>
+<td>容量较大（现在通常是8GB到64GB甚至更高）</td>
+</tr>
+<tr>
+<td>用途</td>
+<td>存储BIOS&#x2F;UEFI、固件、引导程序、手机系统底层代码等。</td>
+<td>用作系统运行内存，临时存放操作系统、应用程序和用户正在操作的数据。</td>
+</tr>
+<tr>
+<td>价格</td>
+<td>相对便宜（按单位存储计算）</td>
+<td>相对昂贵（按单位存储计算）</td>
+</tr>
+<tr>
+<td>物理形态</td>
+<td>芯片形式集成在主板上（如BIOS芯片），或嵌入式设备中。</td>
+<td>通常以内存条的形式插在主板上，也可以直接集成到芯片中（如手机SoC上的RAM）。</td>
+</tr>
+</tbody></table>
 <h3 id="计算机三大总线"><a href="#计算机三大总线" class="headerlink" title="计算机三大总线"></a>计算机三大总线</h3><h4 id="数据总线DB"><a href="#数据总线DB" class="headerlink" title="数据总线DB"></a>数据总线DB</h4><p>数据总线DB用来传送数据信息，是双向的。CPU既可通过DB从内存或输入设备读入数据，又可通过DB将内部数据送至内存或输出设备。DB的宽度决定了CPU和计算机其他设备之间每次交换数据的位数。数据总线的位数是微型计算机的一个重要指标，通常与微处理的字长相一致。需要指出的是，数据的含义是广义的，它可以是真正的数据，也可以是指令代码或状态信息，有时甚至是一个控制信息，因此，在实际工作中，数据总线上传送的并不一定仅仅是真正意义上的数据。</p>
 <h4 id="地址总线AB"><a href="#地址总线AB" class="headerlink" title="地址总线AB"></a>地址总线AB</h4><p>地址总线AB用于传送CPU发出的地址信息，是单向的。传送地址信息的目的是指明与CPU交换信息的内存单元或I&#x2F;O设备。存储器是按地址访问的，所以每个存储单元都有一个固定地址，要访问1MB存储器中的任一单元，需要给出1M个地址，即需要20位地址（2^20&#x3D;1M）。一般来说，若地址总线为n位，则可寻址空间为2^n字节。因此，地址总线的宽度决定了CPU 的最大寻址能力。</p>
 <h4 id="控制总线CB"><a href="#控制总线CB" class="headerlink" title="控制总线CB"></a>控制总线CB</h4><p>控制总线CB用来传送控制信号、时序信号和状态信息等，是双向的。其中有的是CPU向内存或外部设备发出的信息，如读&#x2F;写信号，片选信号、中断响应信号等；有的是内存或外部设备向CPU发出的信息，中断申请信号、复位信号、总线请求信号、设备就绪信号等。显然，CB中的每一条线的信息传送方向是一定的、单向的，但作为一个整体则是双向的。所以，凡涉及到控制总线CB，均是以双向线表示。</p>
