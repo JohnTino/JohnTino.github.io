@@ -29,7 +29,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/post/5.png">
 <meta property="article:published_time" content="2025-05-10T01:00:00.000Z">
-<meta property="article:modified_time" content="2025-09-04T06:56:59.310Z">
+<meta property="article:modified_time" content="2025-09-04T07:04:03.868Z">
 <meta property="article:author" content="JohnTino">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/img/post/5.png">
@@ -245,7 +245,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          24k 字
+          25k 字
         
       </span>
     
@@ -256,7 +256,7 @@
         
         
         
-          203 分钟
+          206 分钟
         
       </span>
     
@@ -482,7 +482,59 @@
 <h3 id="解释udev的作用及工作原理"><a href="#解释udev的作用及工作原理" class="headerlink" title="解释udev的作用及工作原理"></a>解释udev的作用及工作原理</h3><p>udev：是Linux的设备管理守护进程，动态管理&#x2F;dev目录下的设备文件。它能够根据设备的添加或移除自动创建或刑除设备节点，目支持设备的热插拔。工作原理:<br>1、内核事件通知：当有新设备插入或移除时，内核通过 sysfs 通知 udev。<br>2、规则匹配：udev根据配置文件中的规则(通常位于&#x2F;etc&#x2F;udev&#x2F;rules.d&#x2F;)确定如何处理设备。<br>3、创建设备文件：根据规则，udev 创建或刑除相应的设备文件。</p>
 <h3 id="描述ioctl函数的作用以及如何在驱动中使用"><a href="#描述ioctl函数的作用以及如何在驱动中使用" class="headerlink" title="描述ioctl函数的作用以及如何在驱动中使用"></a>描述ioctl函数的作用以及如何在驱动中使用</h3><p>ioctl(I&#x2F;O control)用于实现设备的特殊控制操作，超出了常规的read、write等操作。例如，获取设备状态或设置参数。在驱动中，ioctl的实现通过file_operations结构中的unlocked_ioctl函数指针进行设置。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">long</span> <span class="hljs-title">my_ioct</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> file *file, <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> cmd, <span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> arg)</span></span>&#123;<br>    <span class="hljs-keyword">switch</span>(cmd)&#123;<br>        <span class="hljs-keyword">case</span> MYIOCTL_COMMAND :<br>            <span class="hljs-comment">//处理命令</span><br>            <span class="hljs-keyword">break</span> ;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-<h3 id="Linux设备中字符设备和块设备有什么主要区别？分别举例。"><a href="#Linux设备中字符设备和块设备有什么主要区别？分别举例。" class="headerlink" title="Linux设备中字符设备和块设备有什么主要区别？分别举例。"></a>Linux设备中字符设备和块设备有什么主要区别？分别举例。</h3><p>Linux中I&#x2F;O设备分为两类：块设备和字符设备。两种设备本身没有严格限制，但是，基于不同的功能进行了分类。<br>字符设备：提供连续的数据流，应用程序可以顺序读取，通常不支持随机存取。相反，此类设备支持按字节&#x2F;字符来读写数据。字符终端、串口、鼠标、键盘、摄像头、声卡和显卡等就是典型的字符设备。<br>块设备：应用程序可以随机访问设备数据，程序可自行确定读取数据的位置。硬盘是典型的块设备，应用程序可以寻址磁盘上的任何位置，并由此读取数据。此外，数据的读写只能以块(通常是512B)的倍数进行。与字符设备不同，块设备并不支持基于字符的寻址。如：u盘，SD卡，磁盘等。</p>
+<h3 id="Linux设备中字符设备和块设备有什么主要区别？分别举例。"><a href="#Linux设备中字符设备和块设备有什么主要区别？分别举例。" class="headerlink" title="Linux设备中字符设备和块设备有什么主要区别？分别举例。"></a>Linux设备中字符设备和块设备有什么主要区别？分别举例。</h3><p>Linux中I&#x2F;O设备分为两类：块设备和字符设备。两种设备本身没有严格限制，但是，基于不同的功能进行了分类。<br>字符设备：提供<strong>连续的字节流</strong>，应用程序可以<strong>顺序读取</strong>，通常不支持随机存取，<strong>无缓存</strong>。相反，此类设备支持按字节&#x2F;字符来读写数据。字符终端、串口、鼠标、键盘、摄像头、声卡和显卡等就是典型的字符设备。<br>块设备：应用程序可以<strong>随机访问</strong>设备数据，程序可自行确定读取数据的位置，<strong>有缓存</strong>。硬盘是典型的块设备，应用程序可以寻址磁盘上的任何位置，并由此读取数据。此外，数据的读写只能以<strong>数据块</strong>(通常是512B)的倍数进行。与字符设备不同，块设备并不支持基于字符的寻址。如：u盘，SD卡，磁盘等。<br>网络设备：它不像前两者那样是“文件”，而是一个接口。它没有传统意义上的&#x2F;dev下的设备节点。它的核心任务是收发数据包。应用程序通过socket这个抽象与它交互，告诉它数据包要发往哪个地址，或者从哪个地址接收数据。</p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>字符设备</th>
+<th>块设备</th>
+<th>网络设备</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>数据访问方式</td>
+<td>以字符（字节）为单位进行数据传输</td>
+<td>以块（通常为512字节或更大）为单位进行数据传输</td>
+<td>以数据包（帧）为单位进行数据传输</td>
+</tr>
+<tr>
+<td>数据传输效率</td>
+<td>适合小数据量、实时性要求高的场景</td>
+<td>适合大数据量、顺序读写场景</td>
+<td>适合数据在网络中传输的场景</td>
+</tr>
+<tr>
+<td>设备类型</td>
+<td>键盘、鼠标、串行端口等</td>
+<td>硬盘、SSD、USB存储设备等</td>
+<td>网卡、路由器、交换机等</td>
+</tr>
+<tr>
+<td>缓存机制</td>
+<td>通常不使用缓存</td>
+<td>使用缓存，提高读写性能</td>
+<td>使用缓存，提高数据传输效率</td>
+</tr>
+<tr>
+<td>驱动程序</td>
+<td>字符设备驱动程序</td>
+<td>块设备驱动程序</td>
+<td>网络设备驱动程序</td>
+</tr>
+<tr>
+<td>I&#x2F;O操作</td>
+<td>读写操作直接作用于设备</td>
+<td>读写操作通常涉及缓存和调度</td>
+<td>数据包的发送和接收</td>
+</tr>
+<tr>
+<td>示例</td>
+<td><code>/dev/ttyS0</code> (串行端口)</td>
+<td><code>/dev/sda1</code> (硬盘分区)</td>
+<td><code>/sys/class/net/eth0</code> (网卡)</td>
+</tr>
+</tbody></table>
 <h3 id="假设触摸屏设备对应的设备节点为-dev-input-event0，如何读取屏幕设备数据？"><a href="#假设触摸屏设备对应的设备节点为-dev-input-event0，如何读取屏幕设备数据？" class="headerlink" title="假设触摸屏设备对应的设备节点为&#x2F;dev&#x2F;input&#x2F;event0，如何读取屏幕设备数据？"></a>假设触摸屏设备对应的设备节点为&#x2F;dev&#x2F;input&#x2F;event0，如何读取屏幕设备数据？</h3><p>1、应用程序打开&#x2F;dev&#x2F;input&#x2F;event0 设备文件；<br>2、应用程序发起读操作（譬如调用 read），如果没有数据可读则会进入休眠（阻塞 I&#x2F;O 情况下）；<br>3、当有数据可读时，应用程序会被唤醒，读操作获取到数据返回；<br>4、应用程序对读取到的数据进行解析。当无数据可读时，程序会进入休眠状态（也就是阻塞），譬如应用程序读触摸屏数据，如果当前并没有去触碰触摸屏，自然是无数据可读；当我们用手指触摸触摸屏或者在屏上滑动时，此时就会产生触摸数据、应用程序就有数据可读了，应用程序会被唤醒，成功读取到数据。那么对于其它输入设备亦是如此，无数据可读时应用程序会进入休眠状态（阻塞式 I&#x2F;O 方式下），当有数据可读时才会被唤醒。</p>
 <h3 id="什么是原子操作？原子操作的特点？"><a href="#什么是原子操作？原子操作的特点？" class="headerlink" title="什么是原子操作？原子操作的特点？"></a>什么是原子操作？原子操作的特点？</h3><p>原子操作（Atomic Operation）是指一个不可分割的操作，它在执行过程中不会被其他操作中断。换句话说，原子操作要么完全执行，要么完全不执行，中间状态不会被其他线程或进程观察到。特点  不可分割性：原子操作在执行过程中不会被中断。这意味着在操作开始之前和操作完成之后，系统状态是稳定的，但在操作执行过程中，系统状态对其他线程或进程是不可见的。  线程安全：由于原子操作的不可分割性，它通常用于实现线程安全的操作，避免多线程环境下的竞态条件（Race Condition）和数据不一致问题。</p>
 <h3 id="linux中怎么查看系统性能"><a href="#linux中怎么查看系统性能" class="headerlink" title="linux中怎么查看系统性能"></a>linux中怎么查看系统性能</h3><p>Linux下常用的查看系统性能的命令有以下几个： top：查看系统运行进程及其资源占用情况，可以实时更新显示。 vmstat：查看系统的内存、磁盘、CPU 等资源的使用情况和进程信息。 iostat：查看磁盘 I&#x2F;O 活动情况，显示磁盘读写速度、磁盘利用率等信息。 sar：系统活动报告，可以查看 CPU、内存、磁盘、网络等性能指标历史记录。 netstat：查看网络连接状态、网络接口的状态和统计信息。 ifconfig：查看网络接口的配置信息，包括 IP 地址、MAC 地址等。 free：查看内存使用情况，包括内存总量、空闲内存、已用内存等。 这些命令在排查系统性能问题、优化系统性能方面非常有用，嵌入式开发中同样可以使用。</p>
