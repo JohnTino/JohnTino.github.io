@@ -29,7 +29,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/post/6.jpg">
 <meta property="article:published_time" content="2025-04-06T13:00:00.000Z">
-<meta property="article:modified_time" content="2025-09-03T06:05:39.412Z">
+<meta property="article:modified_time" content="2025-09-03T10:19:59.557Z">
 <meta property="article:author" content="JohnTino">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/img/post/6.jpg">
@@ -256,7 +256,7 @@
         
         
         
-          157 分钟
+          161 分钟
         
       </span>
     
@@ -899,7 +899,9 @@
 </ul>
 <h3 id="HEX文件和BIN文件的区别？"><a href="#HEX文件和BIN文件的区别？" class="headerlink" title="HEX文件和BIN文件的区别？"></a>HEX文件和BIN文件的区别？</h3><p>HEX文件是包括地址信息的，而BIN文件格式只包括了数据本身</p>
 <h3 id="单片机程序与Linux的程序的区别"><a href="#单片机程序与Linux的程序的区别" class="headerlink" title="单片机程序与Linux的程序的区别"></a>单片机程序与Linux的程序的区别</h3><p>单片机的 CPU 是直接操作内存的「物理地址」，单片机是没有操作系统的，所以每次写完代码，都需要借助工具把程序烧录进去，这样程序才能跑起来。因此，要想在内存中同时运行两个程序是不可能的。<br>操作系统是如何解决这个问题呢？ 操作系统会提供一种机制，将不同进程的虚拟地址和不同内存的物理地址映射起来。如果程序要访问虚拟地址的时候，由操作系统转换成不同的物理地址，这样不同的进程运行的时候，写入的是不同的物理地址，这样就不会冲突了。我们程序所使用的内存地址叫做虚拟内存地址(Virtual Memory Address)。实际存在硬件里面的空间地址叫物理内存地址(Physical Memory Address)。<br>单片机代码运行在Flash上，而Linux代码运行在内存上。</p>
-
+<h3 id="介绍一下Keil里的map文件"><a href="#介绍一下Keil里的map文件" class="headerlink" title="介绍一下Keil里的map文件"></a>介绍一下Keil里的map文件</h3><p>Keil MDK中的MAP文件是一个极其重要的诊断工具，它是由链接器（ArmLink）在成功编译链接后生成的文本文件。它详细描述了应用程序的内存布局，是理解和优化嵌入式程序内存使用的“地图”。<br>文件名通常是你的项目名加上 .map 后缀（例如 YourProject.map）。它记录了以下核心信息：<br>1、模块&#x2F;函数&#x2F;变量被放置在了哪里？（地址）<br>2、它们占用了多少空间？（大小）<br>3、它们之间的调用关系如何？（部分依赖）<br>4、最终生成了哪些东西？（组件、库）<br>map文件的作用：解决 No space in execution regions 错误、优化代码体积、排查栈溢出问题、查找变量或函数的地址。</p>
+<h4 id="如何生成-MAP-文件？"><a href="#如何生成-MAP-文件？" class="headerlink" title="如何生成 MAP 文件？"></a>如何生成 MAP 文件？</h4><p>在 Keil MDK 中，默认情况下可能不会生成 MAP 文件，或者生成的信息不全。你需要手动配置以确保生成包含详细信息的 MAP 文件。<br>1、在 Keil IDE 中，右键点击你的 Target -&gt; 选择 Options for Target…<br>2、在弹出的对话框中，选择 Listing 选项卡。<br>3、确保右侧的 Linker Listing 区域中，Select Listing to Generate 下的 Linker Map 被勾选。<br>4、在 Linker 选项卡中，点击 Misc controls 框，并手动添加以下命令来让 MAP 文件包含交叉引用信息：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cpp">--list=YourProject.map --info=unused --info=sizes --info=totals --info=veneers --info=unused --xref<br>--list=：指定 MAP 文件名。<br>--info=sizes / --info=totals：显示模块和库的大小摘要和总计，非常有用。<br>--info=veneers：显示用于长跳转的“ veneer ”信息（与 ARM 内核相关）。<br>--info=unused：列出被明确排除的未使用段，有助于回收空间。<br>--xref：生成交叉引用列表，可以查看符号（函数、变量）在哪里被定义和被谁引用。<br></code></pre></td></tr></table></figure>
                 
               </div>
             
