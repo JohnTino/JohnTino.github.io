@@ -29,7 +29,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/post/6.jpg">
 <meta property="article:published_time" content="2025-04-06T13:00:00.000Z">
-<meta property="article:modified_time" content="2025-09-07T11:26:31.028Z">
+<meta property="article:modified_time" content="2025-09-16T04:53:55.635Z">
 <meta property="article:author" content="JohnTino">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/img/post/6.jpg">
@@ -245,7 +245,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          21k 字
+          22k 字
         
       </span>
     
@@ -256,7 +256,7 @@
         
         
         
-          173 分钟
+          188 分钟
         
       </span>
     
@@ -385,12 +385,15 @@
 <h4 id="控制总线CB"><a href="#控制总线CB" class="headerlink" title="控制总线CB"></a>控制总线CB</h4><p>控制总线CB用来传送控制信号、时序信号和状态信息等，是双向的。其中有的是CPU向内存或外部设备发出的信息，如读&#x2F;写信号，片选信号、中断响应信号等；有的是内存或外部设备向CPU发出的信息，中断申请信号、复位信号、总线请求信号、设备就绪信号等。显然，CB中的每一条线的信息传送方向是一定的、单向的，但作为一个整体则是双向的。所以，凡涉及到控制总线CB，均是以双向线表示。</p>
 <h4 id="单片机总线及挂载外设"><a href="#单片机总线及挂载外设" class="headerlink" title="单片机总线及挂载外设"></a>单片机总线及挂载外设</h4><p>AHB：高级高性能总线（Advanced High Performance Bus），主要用于连接高性能模块，如CPU、DMA和DSP等。<br>APB1：高级外设总线1（Advanced Peripheral Bus 1），属于低速外设总线, 时钟频率通常为系统时钟的一半，STM32F103为72MHz的一半。连接低速外设，如定时器TIM2到TIM7、RTC、WDT看门狗、SPI2、SPI3、USART2、USART3、UART4、UART5、I2C1、I2C2、USB&#x2F;CAN共享的512字节SRAM、bXCAN1、bXCAN2、后备寄存器、电源控制PWR、DAC等<br>APB2：高级外设总线2（Advanced Peripheral Bus 2），属于高速外设总线。连接如USART1、高级控制定时器TIM1和TIM8、模数转换器ADC1、ADC2、ADC3、SPI1、外部中断EXTI、复用IO:AFIO、通用IO:GPIOA-G等<br><img src="https://raw.githubusercontent.com/JohnTino/blogImage/main/img/F103Bridge.png" srcset="/img/loading.gif" lazyload><br>分频器：对频率做除法<br>锁相环：对频率做乘法<br>复用器：对频率做选择 </p>
 <h3 id="复用与映射"><a href="#复用与映射" class="headerlink" title="复用与映射"></a>复用与映射</h3><p>复用指Pin脚本身除了支持普通GPIO功能之外，还支持别的功能，使用别的功能就叫复用。AFIO复用IO口指AFIO主要用于引脚复用功能的选择和重定义。在STM32中，AFIO主要完成两个任务：复用功能引脚重映射、中断引脚选择。重映射指Pin脚本身不支持这些功能，配置重映射寄存器，使其具备别的功能。</p>
-<h3 id="标准库和HAL库的区别"><a href="#标准库和HAL库的区别" class="headerlink" title="标准库和HAL库的区别"></a>标准库和HAL库的区别</h3><p>标准库：1、直接操作寄存器，代码较为底层。2、配置灵活但代码复杂，容易出错。3、不同 STM32 系列的代码兼容性较差。<br>HAL 库：1、提供统一的 API，代码更简洁。 2、支持跨平台和跨系列移植。3、功能更强大，但运行时效率稍低（因增加了抽象层）。</p>
+<h3 id="标准库和HAL库的区别"><a href="#标准库和HAL库的区别" class="headerlink" title="标准库和HAL库的区别"></a>标准库和HAL库的区别</h3><p>标准库：1、直接操作寄存器，代码较为底层。2、配置灵活但代码复杂，容易出错。3、不同 STM32 系列的代码兼容性较差。<br>HAL库：1、提供统一的 API，代码更简洁。 2、支持跨平台和跨系列移植。3、功能更强大，但运行时效率稍低（因增加了抽象层）。</p>
+<h3 id="单片机中的位数是什么意思？"><a href="#单片机中的位数是什么意思？" class="headerlink" title="单片机中的位数是什么意思？"></a>单片机中的位数是什么意思？</h3><p>最核心的区别在于其CPU内部通用寄存器的宽度和数据通路的宽度。简单来说，就是它的CPU一次能同时处理多少位的数据。”<br>8位单片机：CPU一次能处理8位（1个字节）的数据。<br>16位单片机：CPU一次能处理16位（2个字节）的数据。<br>32位单片机：CPU一次能处理32位（4个字节）的数据。<br>高位数的单片机处理能力与计算速度、</p>
 <h3 id="STM32F1和F4的区别？"><a href="#STM32F1和F4的区别？" class="headerlink" title="STM32F1和F4的区别？"></a>STM32F1和F4的区别？</h3><p>内核不同：F1是Cortex-M3内核，F4是Cortex-M4内核；<br>主频不同：F1主频72MHz，F4主频168MHz；<br>浮点运算：F1无浮点运算单位，F4有；<br>功能性能：F4外设比F1丰富且功能更强大，比如GPIO翻转速率、上下拉电阻配置、ADC精度等；<br>内存大小：F1内部SRAM最大64K，F4有192K(112+64+16)。</p>
-<h3 id="介绍以下STM32启动过程？"><a href="#介绍以下STM32启动过程？" class="headerlink" title="介绍以下STM32启动过程？"></a>介绍以下STM32启动过程？</h3><p>通过Boot引脚设定,寻找初始地址，Boot0&#x3D;0: 从主Flash启动（0x08000000 → 映射到0x00000000）；Boot0&#x3D;1, Boot1&#x3D;0: 从系统存储器启动（启动地址：0x1FFF0000（系统存储器的起始地址）<br>）；Boot0&#x3D;1, Boot1&#x3D;1: 从内置SRAM启动（启动地址：0x20000000）</p>
-<p>初始化栈指针 __initial_sp  初始化堆区 __heap_base</p>
-<p>中断向量表，定义中断向量表。它是一个存储在Flash起始位置（0x08000000）的数组，每个元素都是一个4字节的地址。</p>
-<p>指向复位程序 Reset_Hander<br>设置异常中断 HardFault_Handler<br>设置系统时钟 SystemInit<br>调用C库函数 _main</p>
+<h3 id="介绍以下STM32启动过程？"><a href="#介绍以下STM32启动过程？" class="headerlink" title="介绍以下STM32启动过程？"></a>介绍以下STM32启动过程？</h3><p>MCU启动过程主要是：上电复位后，CPU从固定地址<strong>读取栈顶指针（__initial_sp）<strong>和</strong>指向复位函数（Reset_Hander）</strong>，然后执行启动文件代码。启动文件负责<strong>初始化RAM（.data和.bss段）</strong>、<strong>设置异常中断（HardFault_Handler）</strong>、<strong>配置系统时钟（SystemInit）</strong>，最后<strong>跳转到C运行时库的__main函数</strong>，由它完成最后的准备并调用用户的main函数，从而进入应用程序。</p>
+<h4 id="启动模式"><a href="#启动模式" class="headerlink" title="启动模式"></a>启动模式</h4><p>有些MCU有启动模式选择引脚，可以选择从内部Flash、系统存储器（常用于串口ISP下载）、内置SRAM等不同介质启动，通常都是从内部Flash启动。<br>通过Boot引脚设定,寻找初始地址，Boot0&#x3D;0: 从主Flash启动（0x08000000 → 映射到0x00000000）；Boot0&#x3D;1, Boot1&#x3D;0: 从系统存储器启动（启动地址：0x1FFF0000（系统存储器的起始地址）<br>）；Boot0&#x3D;1, Boot1&#x3D;1: 从内置SRAM启动（启动地址：0x20000000）</p>
+<p>根据选定的启动模式，主闪存存储器、系统存储器或SRAM可以按照以下方式访问：<br>● 从主闪存存储器启动：主闪存存储器被映射到启动空间(0x0000 0000)，但仍然能够在它原有的地址(0x0800 0000)访问它，即闪存存储器的内容可以在两个地址区域访问，0x0000 0000或0x0800 0000。<br>● 从系统存储器启动：系统存储器被映射到启动空间(0x0000 0000)，但仍然能够在它原有的地址(互联型产品原有地址为0x1FFF B000，其它产品原有地址为0x1FFF F000)访问它。<br>● 从内置SRAM启动：只能在0x2000 0000开始的地址区访问SRAM。</p>
+<h4 id="中断向量表"><a href="#中断向量表" class="headerlink" title="中断向量表"></a>中断向量表</h4><p>MCU启动过程中，最开始的那段内存区域叫做“中断向量表”，里面存放着所有中断服务函数的入口地址。复位向量只是其中的第一个。它是一个存储在Flash起始位置（0x08000000）的数组，每个元素都是一个4字节的地址。</p>
+<h4 id="分散加载"><a href="#分散加载" class="headerlink" title="分散加载"></a>分散加载</h4><p>在复杂的系统中，代码和数据可能存放在多个不连续的内存区域（如片上Flash、外部Flash、不同速度的RAM），这时需要一个叫“分散加载文件”的配置文件来告诉链接器如何精确地初始化数据。</p>
+<h4 id="与RTOS的关系"><a href="#与RTOS的关系" class="headerlink" title="与RTOS的关系"></a>与RTOS的关系</h4><p>如果使用了RTOS（如FreeRTOS），在进入main函数后，我们会先初始化硬件，然后调用vTaskStartScheduler()，这时RTOS会接管CPU，并开始运行你创建的任务。用户的main函数此时可以看作是一个初始任务。</p>
 <h3 id="时钟树"><a href="#时钟树" class="headerlink" title="时钟树"></a>时钟树</h3><p>时钟RCC，Reset and Clock Control（复位和时钟控制），在绝大部分MCU芯片中都包含复位和时钟控制模块，也是MCU重要的组成部分。51单片机，11.0592Mhz晶振；stm32F103，8Mh晶振，主频72Mhz；stm32F407，12Mhz，主频168Mhz<br>时钟树：一种树状的电路结构，用于将主时钟信号（通常来自晶体振荡器或PLL）分配到芯片上的各个逻辑单元和模块。<br>时钟源：STM32的时钟源分为高速、低速两类时钟，同时也分内部和外部。<br>HSE：High Speed External，高速外部时钟，可接石英&#x2F;陶瓷谐振器，或者接外部时钟源，频率范围为4MHz~16MHz，c8t6是接的8Mhz。<br>HSI：High Speed Internal，高速内部时钟，RC振荡器，频率为8MHz，精度不高。<br>LSE：Low Speed External ，低速外部时钟 ，接频率为32.768kHz的石英晶体。<br>LSI：Low Speed Internal，低速内部时钟，RC振荡器，频率为40kHz，提供低功耗时钟。</p>
 <h3 id="GPIO"><a href="#GPIO" class="headerlink" title="GPIO"></a>GPIO</h3><p><img src="https://raw.githubusercontent.com/JohnTino/blogImage/main/img/GPIO.png" srcset="/img/loading.gif" lazyload></p>
 <h4 id="输入模式"><a href="#输入模式" class="headerlink" title="输入模式"></a>输入模式</h4><p>浮空输入（IN_FLOATING），（IPU）上拉输入（TTL）、（IPD）下拉输入、（AIN）模拟输入(ADC)。<br>区别：<br>1.浮空输入没有上拉和下拉电阻，引脚的电平完全由外部电路决定（外部电路需要提供稳定电平），电平不稳定容易收到外界干扰，如按键输入、传感器信号；<br>2.上拉输入，接上拉电阻当没有外部信号作用时，默认电平为高电平，3.3v或者5v，当外部信号为低电平并产生作用时，引脚会被拉低。<br>3.下拉输入：接下拉电阻，默认电平为0V，如数字信号输入等；<br>4.模拟输入：用以接受模拟信号如（电压值），通常连接一个模数转换器（ADC），如传感器信号输入（如温度、光照、压力等）、音频信号输入（高精度）等。</p>
@@ -956,6 +959,12 @@
 <h3 id="介绍一下Keil里的map文件"><a href="#介绍一下Keil里的map文件" class="headerlink" title="介绍一下Keil里的map文件"></a>介绍一下Keil里的map文件</h3><p>Keil MDK中的MAP文件是一个极其重要的诊断工具，它是由链接器（ArmLink）在成功编译链接后生成的文本文件。它详细描述了应用程序的内存布局，是理解和优化嵌入式程序内存使用的“地图”。<br>文件名通常是你的项目名加上 .map 后缀（例如 YourProject.map）。它记录了以下核心信息：<br>1、模块&#x2F;函数&#x2F;变量被放置在了哪里？（地址）<br>2、它们占用了多少空间？（大小）<br>3、它们之间的调用关系如何？（部分依赖）<br>4、最终生成了哪些东西？（组件、库）<br>map文件的作用：解决 No space in execution regions 错误、优化代码体积、排查栈溢出问题、查找变量或函数的地址。</p>
 <h4 id="如何生成-MAP-文件？"><a href="#如何生成-MAP-文件？" class="headerlink" title="如何生成 MAP 文件？"></a>如何生成 MAP 文件？</h4><p>在 Keil MDK 中，默认情况下可能不会生成 MAP 文件，或者生成的信息不全。你需要手动配置以确保生成包含详细信息的 MAP 文件。<br>1、在 Keil IDE 中，右键点击你的 Target -&gt; 选择 Options for Target…<br>2、在弹出的对话框中，选择 Listing 选项卡。<br>3、确保右侧的 Linker Listing 区域中，Select Listing to Generate 下的 Linker Map 被勾选。<br>4、在 Linker 选项卡中，点击 Misc controls 框，并手动添加以下命令来让 MAP 文件包含交叉引用信息：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cpp">--list=YourProject.map --info=unused --info=sizes --info=totals --info=veneers --info=unused --xref<br>--list=：指定 MAP 文件名。<br>--info=sizes / --info=totals：显示模块和库的大小摘要和总计，非常有用。<br>--info=veneers：显示用于长跳转的“ veneer ”信息（与 ARM 内核相关）。<br>--info=unused：列出被明确排除的未使用段，有助于回收空间。<br>--xref：生成交叉引用列表，可以查看符号（函数、变量）在哪里被定义和被谁引用。<br></code></pre></td></tr></table></figure>
+
+<h3 id="讲一下你常用的ARM架构CPU的外设有哪些？"><a href="#讲一下你常用的ARM架构CPU的外设有哪些？" class="headerlink" title="讲一下你常用的ARM架构CPU的外设有哪些？"></a>讲一下你常用的ARM架构CPU的外设有哪些？</h3><p>在我过往的项目中，主要使用的是ARM Cortex-M系列的微控制器，比如ST公司的STM32F1系列。<br>我常用和接触的外设可以大致分为以下几类：<br>1、通信接口： 这是最常用的一类外设。<br>UART (USART)： 用于异步串行通信，比如连接GPS模块、蓝牙模块、与PC机进行调试日志打印等。成本低，协议简单。<br>I2C (I²C)： 一种两线制的同步串行总线，常用于连接各种传感器（如温湿度、气压传感器）、EEPROM存储器等。节省引脚，支持多从机。<br>SPI： 一种全双工的高速同步串行总线，主要用于连接需要高速数据传输的外设，如Flash存储器、SD卡、显示屏驱动、无线模块（如LoRa、Wi-Fi）等。<br>CAN： 主要用于工业控制和汽车领域的多主机局域网通信，具有很高的抗干扰能力和可靠性。我在汽车电子相关的项目中用过。<br>2、定时与时基单元：<br>基本定时器： 用于产生精确的时基，实现延时、计时等功能。<br>通用定时器： 功能非常强大，除了基本的定时，还可以用于输入捕获（测量脉冲宽度、频率，如编码器）、输出比较（产生特定频率和占空比的PWM波，如控制电机、舵机、呼吸灯）、脉冲计数等。<br>高级定时器： 通常用于复杂的电机控制、数字电源等场景，可以产生带死区互补的PWM输出，这是驱动三相无刷电机所必需的。<br>3、模拟外设：<br>ADC： 模数转换器，用于采集外部模拟传感器的信号，比如光照强度、电池电压、电位器位置等。<br>DAC： 数模转换器，用于输出模拟电压，在某些场景下可以代替PWM实现更平滑的模拟控制。</p>
+<h3 id="讲一下你在项目中使用的最熟的一个外设？具体怎么配置的？"><a href="#讲一下你在项目中使用的最熟的一个外设？具体怎么配置的？" class="headerlink" title="讲一下你在项目中使用的最熟的一个外设？具体怎么配置的？"></a>讲一下你在项目中使用的最熟的一个外设？具体怎么配置的？</h3><p>指定要配置的外设USART1还是USART2、设置波特率为115200、设置字长为8位&#x2F;9位置、设置停止位为1位、是否启用奇偶校验、设置过采样率</p>
+<h3 id="ARM架构"><a href="#ARM架构" class="headerlink" title="ARM架构"></a>ARM架构</h3><p>典型的微处理器由控制单元、程序计数器（PC）、指令寄存器（IR）、数据通道、存储器等组成 。<br>ARMv1: 最早的ARM架构版本，主要用于ARM1处理器。<br>ARMv2: 包括ARM2和ARM3处理器，增加了乘法指令。<br>ARMv3: 支持32位内存地址空间，主要用于ARM6和ARM7处理器。<br>ARMv4: 包括StrongARM、ARM7TDMI和ARM9TDMI处理器。<br>ARMv5: 包括ARM7EJ、ARM9E、ARM10E和XScale处理器。<br>ARMv6: 包括ARM11和Cortex-M处理器，支持单指令多数据（SIMD）运算。<br>ARMv7: 包括Cortex-A、Cortex-R和Cortex-M处理器，支持Thumb-2技术。<br>    Cortex-R系列: 主要用于实时任务处理，包括Cortex-R4、Cortex-R5、Cortex-R7、Cortex-R8和Cortex-R52处理器。面向实时应用的高性能处理器，适用于对实时性要求较高的场合，如硬盘控制器、车载控制系统等<br>    Cortex-M系列: 主要用于最节能的嵌入式设备，包括Cortex-M0、Cortex-M0+、Cortex-M3、Cortex-M4、Cortex-M7、Cortex-M23、Cortex-M33和Cortex-M35P处理器。面向嵌入式应用的微控制器，适用于工业、消费电子等领域的低成本、低功耗应用<br>    Cortex-A系列: 主要用于高性能应用，包括Cortex-A5、Cortex-A7、Cortex-A8、Cortex-A9、Cortex-A15、Cortex-A17、Cortex-A32、Cortex-A35、Cortex-A53、Cortex-A57、Cortex-A72和Cortex-A73处理器。适用于运行复杂操作系统（如Android、iOS、Linux等）的设备，如智能手机、平板电脑等。    此时是ARM32</p>
+<p>ARMv8: 引入64位架构支持，包括Cortex-A30、Cortex-A50和Cortex-A70处理器。       此时是AArch32、AArch64，向后兼容32位模式<br>ARMv9: 提升了安全性，增加了矢量计算、机器学习和数据信号处理能力</p>
+<h3 id="多核异构是什么？"><a href="#多核异构是什么？" class="headerlink" title="多核异构是什么？"></a>多核异构是什么？</h3><p>**多核异构（Heterogeneous Multi-core）**是指一个SoC中包含多种不同架构或能力的核心，例如：<br>Cortex-A系列：高性能，运行Linux等操作系统；<br>Cortex-M系列：低功耗，运行RTOS，用于实时控制任务。<br>典型平台如 NXP i.MX8MP：<br>A核跑Linux系统，适合图形界面、网络通信等复杂任务；<br>M核跑RTOS，负责采样控制、电机驱动等对时序要求高的场景；<br>两者通过共享内存、中断、RPMsg等机制通信</p>
 
                 
               </div>
