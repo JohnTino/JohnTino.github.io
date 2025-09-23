@@ -29,7 +29,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/post/2.png">
 <meta property="article:published_time" content="2025-05-05T02:00:00.000Z">
-<meta property="article:modified_time" content="2025-09-23T12:14:35.007Z">
+<meta property="article:modified_time" content="2025-09-23T12:38:22.786Z">
 <meta property="article:author" content="JohnTino">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/img/post/2.png">
@@ -245,7 +245,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          25k 字
+          26k 字
         
       </span>
     
@@ -256,7 +256,7 @@
         
         
         
-          213 分钟
+          215 分钟
         
       </span>
     
@@ -501,6 +501,7 @@
 <p>3、函数参数中的引用：作为函数参数的引用通常也被优化掉：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">process</span><span class="hljs-params">(<span class="hljs-type">int</span>&amp; num)</span> </span>&#123;<br>    num += <span class="hljs-number">10</span>;  <span class="hljs-comment">// 直接操作原始数据</span><br>&#125;<br></code></pre></td></tr></table></figure>
 <p>编译器通常会将引用参数实现为指针传递，但在函数内部对引用的使用会被优化，直接操作原始数据。<br><strong>总结</strong>：<br>局部简单引用：通常被完全优化掉，不占用额外内存<br>类成员引用：必然占用指针大小的内存空间<br>函数参数引用：实现上类似指针传递，但使用时通常被优化</p>
+<h3 id="数组和链表的区别？"><a href="#数组和链表的区别？" class="headerlink" title="数组和链表的区别？"></a>数组和链表的区别？</h3><p>“数组和链表是两种最基础的线性数据结构，它们的核心区别在于内存布局。<br>数组在内存中是连续的，这带来了两大好处：一是支持O(1)时间的快速随机访问，二是对CPU缓存友好。但缺点是大小固定，插入和删除元素效率低（O(n)）。<br>链表则通过指针将分散的节点连接起来，这使得它可以动态地调整大小，在已知位置的情况下插入和删除元素的效率非常高（O(1)）。但代价是失去了随机访问能力，必须顺序访问（O(n)），并且有指针的内存开销，缓存性能也较差。<br>因此，如果业务场景以随机读取为主，数据量固定，应优先选择数组；如果需要频繁增删数据，数据量不确定，则链表更合适。”</p>
 <h3 id="数组和指针的区别？"><a href="#数组和指针的区别？" class="headerlink" title="数组和指针的区别？"></a>数组和指针的区别？</h3><p>内存分配：数组在定义时需要指定固定大小，内存会在编译时静态分配。而指针没有固定大小，可以动态分配内存。<br>数据访问：数组使用下标来访问元素，可以通过数组名加索引进行访问。指针可以通过解引用操作符(*)或箭头操作符(-&gt;)来访问指向的对象。<br>数组名与指针：数组名本质上是一个常量指针，指向数组首个元素的地址。但数组名不能被赋值或修改。而指针变量可以被重新赋值指向不同的内存地址。<br>函数参数传递：当数组作为函数参数传递时，实际上传递的是该数组首元素的地址。而指针可以直接作为函数参数传递，并改变原始数据。</p>
 <h3 id="数组指针和指针数组有什么区别？"><a href="#数组指针和指针数组有什么区别？" class="headerlink" title="数组指针和指针数组有什么区别？"></a>数组指针和指针数组有什么区别？</h3><p>数组指针就是指向数组的指针，它的重点是指针，size为4个字节。例如，int (*arr)[4];<br>指针数组是一个数组，其中的每个元素都是指针，size为（指针数组的元素个数×4）字节。例如，int *ptrs[3]        </p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 数组指针    类型*  数组名[数组大小];         </span><br><span class="hljs-type">int</span> arr[<span class="hljs-number">8</span>]=&#123;<span class="hljs-number">1</span>，<span class="hljs-number">2</span>，<span class="hljs-number">3</span>，<span class="hljs-number">4</span>，<span class="hljs-number">5</span>，<span class="hljs-number">6</span>，<span class="hljs-number">7</span>，<span class="hljs-number">8</span>&#125;;<br><span class="hljs-type">int</span>(*pa)[<span class="hljs-number">8</span>]= &amp;arr; <span class="hljs-comment">// pa向arr数组</span><br><span class="hljs-comment">//访问数组元素，(*pa)表示解引用指针pa，得到它指向的数组，然后通过[3]访问数组的第4个元素。</span><br><span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>,(*pa)[<span class="hljs-number">3</span>]);  <span class="hljs-comment">//输出4 </span><br><br><span class="hljs-comment">// 指针数组    类型 (*指针变量名)[数组大小];    </span><br><span class="hljs-type">int</span> a=<span class="hljs-number">1</span>,b=<span class="hljs-number">2</span>,c=<span class="hljs-number">3</span>;<br><span class="hljs-type">int</span> *pa[<span class="hljs-number">3</span>]=&#123;&amp;a，&amp;b，&amp;c&#125;; <span class="hljs-comment">// pa是一个包含3个指针的数组</span><br><span class="hljs-comment">// 访访问指针数组中的元素</span><br><span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>，*pa[<span class="hljs-number">1</span>]); <span class="hljs-comment">// 输出2</span><br></code></pre></td></tr></table></figure>
