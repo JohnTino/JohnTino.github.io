@@ -29,7 +29,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/post/6.jpg">
 <meta property="article:published_time" content="2025-04-06T13:00:00.000Z">
-<meta property="article:modified_time" content="2025-09-16T05:09:01.171Z">
+<meta property="article:modified_time" content="2025-09-23T08:26:05.151Z">
 <meta property="article:author" content="JohnTino">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/img/post/6.jpg">
@@ -245,7 +245,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          22k 字
+          23k 字
         
       </span>
     
@@ -256,7 +256,7 @@
         
         
         
-          188 分钟
+          189 分钟
         
       </span>
     
@@ -439,6 +439,7 @@
 <h4 id="UART误码率-通信错误排查"><a href="#UART误码率-通信错误排查" class="headerlink" title="UART误码率 &amp; 通信错误排查"></a>UART误码率 &amp; 通信错误排查</h4><p>误码率 (Bit Error Rate, BER): 错误接收的比特数占总传输比特数的比率。例如 10^-6 表示平均每传输100万个比特，会有1个比特出错。<br>通信错误原因排查:<br>硬件方面:<br>波特率不匹配: 双方波特率误差超过允许范围（通常&lt;3%）。用示波器测量位宽确认。<br>电平不匹配: 如把3.3V TTL设备直接接到5V TTL设备，可能无法正确识别高低电平。<br>线路干扰&#x2F;过长: 导线过长、无屏蔽导致信号失真，边沿变缓。<br>共地问题: 双方地线未连接，参考电平不一致。<br>硬件损坏: TX、RX线接反，或芯片串口损坏。</p>
 <p>软件方面:<br>配置错误: 数据位、停止位、奇偶校验位设置与对方不匹配。<br>缓冲区溢出: 接收数据处理太慢，未及时读取接收缓冲区导致数据被覆盖。<br>中断冲突: 串口中断被更高优先级中断长时间阻塞，未能及时读取接收到的数据。</p>
 <h4 id="UART与USART区别"><a href="#UART与USART区别" class="headerlink" title="UART与USART区别"></a>UART与USART区别</h4><p>USART是通用同步和异步收发器，UART是通用异步收发器，当进行异步通信时,这两者是没有区别的。区别在于USART比UART多了同步通信功能。这个同步通信功能可以把USART当做SPI来用，比如用USART来驱动SPI设备。</p>
+<h4 id="UART串口有时钟线吗，他是怎么保证数据发完之后对方知道你发完的，UART怎么保证数据的准确性？"><a href="#UART串口有时钟线吗，他是怎么保证数据发完之后对方知道你发完的，UART怎么保证数据的准确性？" class="headerlink" title="UART串口有时钟线吗，他是怎么保证数据发完之后对方知道你发完的，UART怎么保证数据的准确性？"></a>UART串口有时钟线吗，他是怎么保证数据发完之后对方知道你发完的，UART怎么保证数据的准确性？</h4><p>uart无专用时钟线，双方通过预设波特率115200同步数据<br>uart帧格式包含停止位，1，2个bit，高电平，表示一帧数据结束，例如：一个起始位（低）+8个数据位+1个停止位（高）<br>准确性保证<br>硬件上通过奇偶校验位（奇校验、偶校验）检测单bit错误<br>软件上可添加CRC校验或超时重传机制如modbus协议</p>
 <h3 id="RS232和RS485通讯接口有什么区别？"><a href="#RS232和RS485通讯接口有什么区别？" class="headerlink" title="RS232和RS485通讯接口有什么区别？"></a>RS232和RS485通讯接口有什么区别？</h3><ol>
 <li>传输方式不同。 RS232采取不平衡传输方式，即所谓单端通讯。 而RS485则采用平衡传输，即差分传输方式。</li>
 <li>传输距离不同。RS232适合本地设备之间的通信，传输距离一般不超过20m。而RS485的传输距离为几十米到上千米。</li>
