@@ -29,7 +29,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/post/6.jpg">
 <meta property="article:published_time" content="2025-04-06T13:00:00.000Z">
-<meta property="article:modified_time" content="2025-09-23T08:26:05.151Z">
+<meta property="article:modified_time" content="2025-10-14T03:05:08.060Z">
 <meta property="article:author" content="JohnTino">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/img/post/6.jpg">
@@ -256,7 +256,7 @@
         
         
         
-          189 分钟
+          190 分钟
         
       </span>
     
@@ -520,7 +520,7 @@
 <h4 id="SPI通信特点"><a href="#SPI通信特点" class="headerlink" title="SPI通信特点"></a>SPI通信特点</h4><p>1.四根通信线：SCLK（Serial Clock）、MOSI（Master Output Slave Input）、MISO（Master Input Slave Output）、SS（Slave Select）。 MISO：主设备输入&#x2F;从设备输出引脚。该引脚在从模式下发送数据，在主模式下接收数据。MOSI：主设备输出&#x2F;从设备输入引脚。该引脚在主模式下发送数据，在从模式下接收数据。SCLK：串行时钟信号，由主设备产生。CS&#x2F;SS：从设备片选信号，由主设备控制。它的功能是用来作为“片选引脚”，也就是选择指定的从设备，让主设备可以单独地与特定从设备通讯，避免数据线上的冲突。<br>2.SPI没有应答机制，发送就直接发送，接收就直接接收；<br>3.主从模式：一主一从；一主多从；不能多主。<br>4.没有复杂的寻址机制，使用专用的片选线选择从设备<br>5.没有应答机制，主设备无法确认从设备是否正确接收数据</p>
 <h4 id="硬件SPI和软件模拟SPI的区别有哪些？"><a href="#硬件SPI和软件模拟SPI的区别有哪些？" class="headerlink" title="硬件SPI和软件模拟SPI的区别有哪些？"></a>硬件SPI和软件模拟SPI的区别有哪些？</h4><p>硬件SPI的效率要比软件模拟SPI高，写程序的时候只要把要发的数据写在寄存器里，硬件就会自动给你发了，软件模拟SPI则需要器实现时钟的拉高拉低，数据串行输出等等。硬件SPI必须要处理器支持才可以用，软件SPI就不需要特定的要求了，一般IO口就可用。</p>
 <h4 id="SPI有几种工作模式？它们有什么区别？"><a href="#SPI有几种工作模式？它们有什么区别？" class="headerlink" title="SPI有几种工作模式？它们有什么区别？"></a>SPI有几种工作模式？它们有什么区别？</h4><p>SPI有4种工作模式（Mode 0-3），不同的从设备可能在出厂是就是配置为某种模式，这是不能改变的；但通信双方必须是工作在同一模式下，所以可以对主设备的SPI模式进行配置，通过CPOL（时钟极性）和CPHA（时钟相位）来控制我们主设备的通信模式。<br>时钟极性(CPOL)定义了时钟空闲状态电平。CPOL&#x3D;0，表示当SCLK&#x3D;0时总线状态时钟为空闲（低电平），所以有效状态就是SCLK处于高电平时，第一个跳变为上升沿；CPOL&#x3D;1，表示当SCLK&#x3D;1时总线状态时钟为空闲（高电平），所以有效状态就是SCLK处于低电平时，第一个跳变为下降沿。<br>时钟相位(CPHA)定义数据的采集时间。CPHA&#x3D;0，在时钟的第一个跳变沿（上升沿或下降沿）进行数据采样，数据在第一个时钟边沿采样，在第2个边沿发送数据；CPHA&#x3D;1，在时钟的第二个跳变沿（上升沿或下降沿）进行数据采样，数据在第二个时钟边沿采样，在第1个边沿发送数据。<br>模式0：CPOL&#x3D;0,CPHA&#x3D;0<br><img src="https://raw.githubusercontent.com/JohnTino/blogImage/main/img/spimode0.png" srcset="/img/loading.gif" lazyload><br>模式1：CPOL&#x3D;0,CPHA&#x3D;1<br><img src="https://raw.githubusercontent.com/JohnTino/blogImage/main/img/spimode1.png" srcset="/img/loading.gif" lazyload><br>模式2：CPOL&#x3D;1,CPHA&#x3D;0<br><img src="https://raw.githubusercontent.com/JohnTino/blogImage/main/img/spimode2.png" srcset="/img/loading.gif" lazyload><br>模式3：CPOL&#x3D;1,CPHA&#x3D;1<br><img src="https://raw.githubusercontent.com/JohnTino/blogImage/main/img/spimode3.png" srcset="/img/loading.gif" lazyload></p>
-<h4 id="SPI有几根线，可以去除几根线"><a href="#SPI有几根线，可以去除几根线" class="headerlink" title="SPI有几根线，可以去除几根线"></a>SPI有几根线，可以去除几根线</h4><p>SPI有四根线。CS片选线，SCKL时钟线、MOSI， MISO.<br>如果不需要双向通信，MOSI，MISO可以根据需求去掉其中一根。<br>如果是一对一单向通信，可以把片选线也去掉，两根线即可。SCLK+MOSI&#x2F;MISO</p>
+<h4 id="SPI有几根线，可以去除几根线"><a href="#SPI有几根线，可以去除几根线" class="headerlink" title="SPI有几根线，可以去除几根线"></a>SPI有几根线，可以去除几根线</h4><p>SPI标准情况下有四根线。CS片选线，SCKL时钟线、MOSI， MISO.<br>三线制：如果不需要双向通信，MOSI，MISO可以根据需求去掉其中一根。半双工模式： 当主设备和从设备不需要同时发送和接收数据时，可以将 MOSI 和 MISO 合并成一根双向数据线（通常称为 SDO 或 DIO）。通过方向控制，分时复用这根线。这需要设备支持这种模式。只读或只写模式： 如果通信是单向的，例如只从从设备读取数据（如传感器），那么可以只接 MISO，不接 MOSI，反之亦然。但片选和时钟仍然是必需的。<br>二线制: 如果是一对一单向通信，单主单从，且从设备允许永久被选中（例如，其CS引脚被永久接地）,可以把片选线也去掉，两根线即可。SCLK+MOSI&#x2F;MISO</p>
 <h3 id="中断相关"><a href="#中断相关" class="headerlink" title="中断相关"></a>中断相关</h3><p>中断是指在主程序运行过程中，出现了特定的中断触发条件（中断源），使得CPU暂停当前正在运行的程序，转而去处理中断程序，处理完成后又返回原来被暂停的位置继续运行，CPU参与，而DMA是外设与内存进行交互（CPU不参与）。</p>
 <h4 id="中断的基本工作原理是什么？"><a href="#中断的基本工作原理是什么？" class="headerlink" title="中断的基本工作原理是什么？"></a>中断的基本工作原理是什么？</h4><p>1.中断源产生中断请求信号<br>2.CPU检测到中断请求，完成当前指令执行<br>3.CPU保存当前程序状态（程序计数器、状态寄存器等）<br>4.CPU跳转到中断服务程序执行<br>5.中断服务程序执行完毕后，恢复之前保存的程序状态<br>6.继续执行被中断的程序</p>
 <h4 id="中断类型有哪些？"><a href="#中断类型有哪些？" class="headerlink" title="中断类型有哪些？"></a>中断类型有哪些？</h4><p>按触发源分类：硬件中断：由外部设备触发（定时器、GPIO、通信接口等）；软件中断：由软件指令触发（SWI指令、系统调用等）<br>按优先级分类：可屏蔽中断：可以通过设置中断屏蔽位禁用；不可屏蔽中断：不能被禁用，通常用于处理严重错误<br>按响应时间分类：同步中断：与程序执行同步，如指令执行错误；异步中断：与程序执行无关，如外部设备请求<br>特殊中断类型：异常：由CPU内部错误引起（如除零、非法指令）。陷阱：由程序主动触发的中断（如系统调用）。故障：可恢复的错误（如缺页异常）</p>
