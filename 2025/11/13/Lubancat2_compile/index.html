@@ -20,23 +20,23 @@
   <meta name="author" content="JohnTino">
   <meta name="keywords" content="">
   
-    <meta name="description" content="记录猫2内核编译过程。 猫2内核编译过程获取并配置编译工具的环境变量12345678#获取编译工具链git clone https:&#x2F;&#x2F;github.com&#x2F;LubanCat&#x2F;gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu.git#导出环境变量，需要根据实际指定编译工具链的绝对路径export PATH&#x3D;&#x2F;root&#x2F;gcc-linaro-6.3.">
+    <meta name="description" content="记录猫2内核编译过程。 RK356X内核编译过程获取并配置编译工具的环境变量12345678#获取编译工具链git clone https:&#x2F;&#x2F;github.com&#x2F;LubanCat&#x2F;gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu.git#导出环境变量，需要根据实际指定编译工具链的绝对路径export PATH&#x3D;&#x2F;root&#x2F;gcc-linaro-">
 <meta property="og:type" content="article">
-<meta property="og:title" content="猫2内核编译过程">
+<meta property="og:title" content="RK356X内核编译过程">
 <meta property="og:url" content="http://example.com/2025/11/13/Lubancat2_compile/index.html">
 <meta property="og:site_name" content="JohnTino&#39;s Blog">
-<meta property="og:description" content="记录猫2内核编译过程。 猫2内核编译过程获取并配置编译工具的环境变量12345678#获取编译工具链git clone https:&#x2F;&#x2F;github.com&#x2F;LubanCat&#x2F;gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu.git#导出环境变量，需要根据实际指定编译工具链的绝对路径export PATH&#x3D;&#x2F;root&#x2F;gcc-linaro-6.3.">
+<meta property="og:description" content="记录猫2内核编译过程。 RK356X内核编译过程获取并配置编译工具的环境变量12345678#获取编译工具链git clone https:&#x2F;&#x2F;github.com&#x2F;LubanCat&#x2F;gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu.git#导出环境变量，需要根据实际指定编译工具链的绝对路径export PATH&#x3D;&#x2F;root&#x2F;gcc-linaro-">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/post/kenan.png">
 <meta property="article:published_time" content="2025-11-13T08:00:00.000Z">
-<meta property="article:modified_time" content="2025-11-13T11:03:34.183Z">
+<meta property="article:modified_time" content="2025-11-13T11:04:05.830Z">
 <meta property="article:author" content="JohnTino">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/img/post/kenan.png">
   
   
   
-  <title>猫2内核编译过程 - JohnTino&#39;s Blog</title>
+  <title>RK356X内核编译过程 - JohnTino&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -222,7 +222,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="猫2内核编译过程"></span>
+            <span id="subtitle" data-typed-text="RK356X内核编译过程"></span>
           
         </div>
 
@@ -245,7 +245,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          439 字
+          438 字
         
       </span>
     
@@ -311,13 +311,13 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">猫2内核编译过程</h1>
+            <h1 id="seo-header">RK356X内核编译过程</h1>
             
             
               <div class="markdown-body">
                 
                 <p>记录猫2内核编译过程。</p>
-<h3 id="猫2内核编译过程"><a href="#猫2内核编译过程" class="headerlink" title="猫2内核编译过程"></a>猫2内核编译过程</h3><h4 id="获取并配置编译工具的环境变量"><a href="#获取并配置编译工具的环境变量" class="headerlink" title="获取并配置编译工具的环境变量"></a>获取并配置编译工具的环境变量</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c">#获取编译工具链<br>git clone https:<span class="hljs-comment">//github.com/LubanCat/gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu.git</span><br><br>#导出环境变量，需要根据实际指定编译工具链的绝对路径<br>export PATH=/root/gcc-linaro<span class="hljs-number">-6.3</span>.<span class="hljs-number">1</span><span class="hljs-number">-2017.05</span>-x86_64_aarch64-linux-gnu/bin:$PATH<br><br>#查看编译工具链，如果COLLECT_LTO_WRAPPER变量为指定的路径，即配置成功<br>aarch64-linux-gnu-gcc -v<br></code></pre></td></tr></table></figure>
+<h3 id="RK356X内核编译过程"><a href="#RK356X内核编译过程" class="headerlink" title="RK356X内核编译过程"></a>RK356X内核编译过程</h3><h4 id="获取并配置编译工具的环境变量"><a href="#获取并配置编译工具的环境变量" class="headerlink" title="获取并配置编译工具的环境变量"></a>获取并配置编译工具的环境变量</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c">#获取编译工具链<br>git clone https:<span class="hljs-comment">//github.com/LubanCat/gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu.git</span><br><br>#导出环境变量，需要根据实际指定编译工具链的绝对路径<br>export PATH=/root/gcc-linaro<span class="hljs-number">-6.3</span>.<span class="hljs-number">1</span><span class="hljs-number">-2017.05</span>-x86_64_aarch64-linux-gnu/bin:$PATH<br><br>#查看编译工具链，如果COLLECT_LTO_WRAPPER变量为指定的路径，即配置成功<br>aarch64-linux-gnu-gcc -v<br></code></pre></td></tr></table></figure>
 <h4 id="RK356X内核源码下载"><a href="#RK356X内核源码下载" class="headerlink" title="RK356X内核源码下载"></a>RK356X内核源码下载</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">git clone -b stable<span class="hljs-number">-4.19</span>-rk356x https:<span class="hljs-comment">//github.com/LubanCat/kernel.git</span><br></code></pre></td></tr></table></figure>
 <h4 id="在PC上交叉编译内核"><a href="#在PC上交叉编译内核" class="headerlink" title="在PC上交叉编译内核"></a>在PC上交叉编译内核</h4><ol>
 <li><p>清除之前生成的所有文件和配置<br>make mrproper</p>
@@ -350,7 +350,7 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>猫2内核编译过程</div>
+      <div>RK356X内核编译过程</div>
       <div>http://example.com/2025/11/13/Lubancat2_compile/</div>
     </div>
     <div class="license-meta">
