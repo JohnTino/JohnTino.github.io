@@ -1,0 +1,24 @@
+/* 修改 Slogan 字体样式 */
+#banner .slogan-typed {
+    /* 字体颜色 */
+    color: #ff6b6b !important;
+    
+    /* 字体大小 */
+    font-size: 2.5rem !important;
+    
+    /* 字体粗细 */
+    font-weight: 700 !important;
+    
+    /* 字体家族 */
+    font-family: 
+        'Microsoft YaHei', 
+        'PingFang SC', 
+        'Segoe UI', 
+        sans-serif !important;
+    
+    /* 文字阴影 */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5) !important;
+    
+    /* 字间距 */
+    letter-spacing: 2px !important;
+}
