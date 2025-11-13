@@ -7,3 +7,4 @@ $(bannerContainer).css("background-image", "url()");
 const color = $(bannerMask).css("background-color");
 $(bannerMask).css("background-color", `rgba(0,0,0,0)`);
 $(viewBg).css("background-color", color);
+
