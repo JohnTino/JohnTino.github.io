@@ -20,23 +20,23 @@
   <meta name="author" content="JohnTino">
   <meta name="keywords" content="">
   
-    <meta name="description" content="一个记录Linux常用命令的博客。 Linux常用命令chmod可以使用a,u,g,o指定给什么用户修改权限,augo分别表示所有人(all)、用户(user)、组(group)、其他用户(other)示例:1.给所有用户加上x权限:  chmod a+x hello2.给所有用户去除x权限:  chmod a-x hello3.给拥有者加上x权限:    chmod u+x hello4.给拥有">
+    <meta name="description" content="一个记录Linux常用命令的博客。 猫2内核编译过程RK356X内核源码下载1git clone -b stable-4.19-rk356x https:&#x2F;&#x2F;github.com&#x2F;LubanCat&#x2F;kernel.git 在PC上交叉编译内核 #清除之前生成的所有文件和配置  make mrproper  加载lubancat2_defconfig配置文件，rk356x系列均是该配置文件make A">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux常用命令">
-<meta property="og:url" content="http://example.com/2025/07/13/linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/index.html">
+<meta property="og:title" content="猫2内核编译过程">
+<meta property="og:url" content="http://example.com/2025/11/13/Lubancat2_compile/index.html">
 <meta property="og:site_name" content="JohnTino&#39;s Blog">
-<meta property="og:description" content="一个记录Linux常用命令的博客。 Linux常用命令chmod可以使用a,u,g,o指定给什么用户修改权限,augo分别表示所有人(all)、用户(user)、组(group)、其他用户(other)示例:1.给所有用户加上x权限:  chmod a+x hello2.给所有用户去除x权限:  chmod a-x hello3.给拥有者加上x权限:    chmod u+x hello4.给拥有">
+<meta property="og:description" content="一个记录Linux常用命令的博客。 猫2内核编译过程RK356X内核源码下载1git clone -b stable-4.19-rk356x https:&#x2F;&#x2F;github.com&#x2F;LubanCat&#x2F;kernel.git 在PC上交叉编译内核 #清除之前生成的所有文件和配置  make mrproper  加载lubancat2_defconfig配置文件，rk356x系列均是该配置文件make A">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/post/kenan.png">
-<meta property="article:published_time" content="2025-07-13T01:00:00.000Z">
-<meta property="article:modified_time" content="2025-11-11T01:18:36.600Z">
+<meta property="article:published_time" content="2025-11-13T08:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-13T10:55:05.644Z">
 <meta property="article:author" content="JohnTino">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/img/post/kenan.png">
   
   
   
-  <title>Linux常用命令 - JohnTino&#39;s Blog</title>
+  <title>猫2内核编译过程 - JohnTino&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -222,7 +222,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Linux常用命令"></span>
+            <span id="subtitle" data-typed-text="猫2内核编译过程"></span>
           
         </div>
 
@@ -233,8 +233,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-07-13 09:00" pubdate>
-          2025年7月13日 上午
+        <time datetime="2025-11-13 16:00" pubdate>
+          2025年11月13日 下午
         </time>
       </span>
     
@@ -245,7 +245,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.4k 字
+          317 字
         
       </span>
     
@@ -256,7 +256,7 @@
         
         
         
-          12 分钟
+          3 分钟
         
       </span>
     
@@ -311,30 +311,28 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Linux常用命令</h1>
+            <h1 id="seo-header">猫2内核编译过程</h1>
             
             
               <div class="markdown-body">
                 
                 <p>一个记录Linux常用命令的博客。</p>
-<h2 id="Linux常用命令"><a href="#Linux常用命令" class="headerlink" title="Linux常用命令"></a>Linux常用命令</h2><h3 id="chmod"><a href="#chmod" class="headerlink" title="chmod"></a>chmod</h3><p>可以使用a,u,g,o指定给什么用户修改权限,augo分别表示所有人(all)、用户(user)、组(group)、其他用户(other)示例:<br>1.给所有用户加上x权限:  chmod a+x hello<br>2.给所有用户去除x权限:  chmod a-x hello<br>3.给拥有者加上x权限:    chmod u+x hello<br>4.给拥有者去除x权限:    chmod u-x hello<br>数值表示：如 -rwxrwx—<br>owner&#x3D;rwx&#x3D;4+2+1&#x3D;7<br>group&#x3D;rwx&#x3D;4+2+1&#x3D;7<br>others&#x3D;—&#x3D;0+0+0&#x3D;0<br>所以在设置权限时，该文件的权限数字就是 770.</p>
-<h3 id="ifconfig"><a href="#ifconfig" class="headerlink" title="ifconfig"></a>ifconfig</h3><p>启动关闭指定网卡  ifconfig eth0 up&#x2F;down<br>配置IP地址(如给eth0网卡配置IP地址,加上子掩码,加上个广播地址)     ifconfig eth0 192.168.1.56 netmask 255.255.255.0 broadcast 192.168.1.255<br>启用和关闭ARP协议     ifconfig eth0 arp&#x2F;-arp</p>
-<h3 id="date"><a href="#date" class="headerlink" title="date"></a>date</h3><p>显示当前时间 date<br>显示完整的时间 date ‘+%D’<br>显示数字日期  date ‘+%x’<br>格式化输出  date +”%Y-%m-%d”<br>输出昨天日期： date -d “1 day ago” +”%Y-%m-%d”</p>
-<h3 id="kill"><a href="#kill" class="headerlink" title="kill"></a>kill</h3><p>终止 PID 为 1234 的进程： kill 1234<br>强制终止 PID 为 1234 的进程： kill -9 1234<br>向 PID 为 1234 的进程发送 SIGSTOP：  kill -s SIGSTOP 1234<br>杀死指定用户所有进程:  kill -9 $(ps -ef | grep hnlinux) &#x2F;&#x2F;方法一 过滤出hnlinux用户进程 ；  kill -u hnlinux &#x2F;&#x2F;方法二<br>Tip: kill 命令是向进程发送信号，kill 不是杀死的意思，-9 表示无条件退出，但由进程自行决定是否退出，kill -9 终止不了系统进程和守护进程的原因。<br>如果kill -9终止不了，说明：1）这个进程是僵尸进程；2）这个进程处于”核心态”。</p>
-<h3 id="history"><a href="#history" class="headerlink" title="history"></a>history</h3><p>查看完整历史记录   history<br>查看最近 N 条记录   history N<br>找回忘记的命令  history | grep “apt install”<br>查看你的命令历史，找出最近使用的5条git命令   history | grep git | tail -5</p>
-<h3 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h3><p>在文件 file.txt 中查找字符串 “hello”，并打印匹配的行： grep hello file.txt<br>在文件夹 dir 中递归查找所有文件中匹配正则表达式 “pattern” 的行，并打印匹配行所在的文件名和行号：  grep -r -n pattern dir&#x2F;<br>在当前目录中，查找后缀有file字样的文件中包含test字符串的文件，并打印出该字符串的行。此时，可以使用如下命令：  grep test *file </p>
-<h3 id="find"><a href="#find" class="headerlink" title="find"></a>find</h3><p>查找当前目录下名为file.txt的文件：                 find . -name file.txt<br>将当前目录及其子目录下所有文件后缀为.c 的文件列出来: find . -name “*.c”<br>将当前目录及其子目录中的所有文件列出：              find . -type f<br>查找 &#x2F;home目录下大于 1MB 的文件：                  find &#x2F;home -size +1M<br>查找 &#x2F;var&#x2F;log 目录下在 7 天前修改过的文件：         find &#x2F;var&#x2F;log -mtime +7</p>
-<h3 id="mv"><a href="#mv" class="headerlink" title="mv"></a>mv</h3><p>将文件 aaa 改名为 bbb: mv aaa bbb<br>将info目录放入logs目录中(如果logs目录不存在，则该命令将info改名为logs):  mv info&#x2F; logs<br>将 &#x2F;usr&#x2F;runoob 下的所有文件和目录移到当前目录下： mv &#x2F;usr&#x2F;runoob&#x2F;*  . </p>
-<h3 id="locate"><a href="#locate" class="headerlink" title="locate"></a>locate</h3><p>查找 passwd 文件，输入以下命令：  locate passwd<br>搜索 etc 目录下所有以 sh 开头的文件： locate &#x2F;etc&#x2F;sh</p>
-<h3 id="passwd"><a href="#passwd" class="headerlink" title="passwd"></a>passwd</h3><p>修改用户密码   passwd runoob  &#x2F;&#x2F;设置runoob用户的密码<br>显示账号密码信息  passwd -S runoob<br>删除用户密码  passwd -d lx138 </p>
-<h3 id="tar"><a href="#tar" class="headerlink" title="tar"></a>tar</h3><p>创建归档文件：将文件file1、file2和directory打包到一个名为 archive.tar 的归档文件中： tar -cvf archive.tar file1 file2 directory<br>解压归档文件：解压名为 archive.tar 的归档文件。 tar -xvf archive.tar<br>指定压缩格式<br>z : 使用 gzip 压缩。tar -czvf archive.tar.gz directory   解压：tar -xzvf archive.tar.gz<br>j: 使用 bzip2 压缩。tar -cjvf archive.tar.bz2 directory  解压：tar -xjvf archive.tar.bz2<br>J: 使用 xz 压缩。 tar -cJvf archive.tar.xz directory     解压：tar -xJvf archive.tar.xz</p>
-<h3 id="zip"><a href="#zip" class="headerlink" title="zip"></a>zip</h3><p>压缩单个文件   zip archive.zip example.txt<br>压缩多个文件   zip archive.zip file1.txt file2.txt file3.txt<br>递归压缩目录   zip -r archive.zip directory&#x2F;<br>压缩并设置密码保护   zip -e archive.zip file.txt<br>解压缩.zip 文件：  unzip archive.zip</p>
-<h3 id="scp"><a href="#scp" class="headerlink" title="scp"></a>scp</h3><p>将文件example.txt复制到远程主机的&#x2F;home&#x2F;user&#x2F;目录下：scp example.txt user@remote_host:&#x2F;home&#x2F;user&#x2F;<br>将远程主机上的文件example.txt复制到本地的当前目录：scp user@remote_host:&#x2F;home&#x2F;user&#x2F;example.txt .<br>递归复制目录，将本地的my_directory目录复制到远程主机的&#x2F;home&#x2F;user&#x2F;目录下： scp -r my_directory user@remote_host:&#x2F;home&#x2F;user&#x2F;</p>
-<h3 id="systemctl"><a href="#systemctl" class="headerlink" title="systemctl"></a>systemctl</h3><p>启动服务   sudo systemctl start [服务名]<br>停止服务   sudo systemctl stop [服务名]<br>重启服务   sudo systemctl restart [服务名]<br>重新加载配置（不重启服务）    sudo systemctl reload [服务名]<br>查看单个服务状态    systemctl status [服务名]<br>查看所有运行中的服务   systemctl list-units –type&#x3D;service –state&#x3D;running<br>查看失败的服务     systemctl –failed<br>启用服务（开机自启）    sudo systemctl enable [服务名]<br>禁用服务（取消开机自启）  sudo systemctl disable [服务名]<br>查看服务是否启用     systemctl is-enabled [服务名]</p>
-<h4 id="服务启动失败检查"><a href="#服务启动失败检查" class="headerlink" title="服务启动失败检查"></a>服务启动失败检查</h4><p>查看详细日志： journalctl -u [服务名] -xe<br>检查依赖关系： systemctl list-dependencies [服务名]<br>在调试模式下运行： systemctl status [服务名] -l –no-pager</p>
-<h3 id="man"><a href="#man" class="headerlink" title="man"></a>man</h3><p>要查看 ls 命令的手册页面，可以执行以下命令：  man ls<br>要查看 C 语言标准库函数 printf 的手册页面，可以执行： man 3 printf<br>要搜索包含特定关键字的手册页面条目，可以使用 -k 选项： man -k keyword</p>
-<h3 id="ps-用于显示当前进程的状态"><a href="#ps-用于显示当前进程的状态" class="headerlink" title="ps 用于显示当前进程的状态"></a>ps 用于显示当前进程的状态</h3><p>查找指定进程格式：  ps -ef | grep 进程关键字<br>显示进程信息：  ps -A<br>显示root进程用户信息： ps -u root<br>显示所有进程信息，连同命令行： ps -ef </p>
-<h3 id="sudo-apt-update错误"><a href="#sudo-apt-update错误" class="headerlink" title="sudo apt update错误"></a>sudo apt update错误</h3><p>大概率是系统日期不对的问题，使用date查看日期并且修改，如sudo date –set&#x3D;”2024-11-17 12:34:00”</p>
+<h3 id="猫2内核编译过程"><a href="#猫2内核编译过程" class="headerlink" title="猫2内核编译过程"></a>猫2内核编译过程</h3><h4 id="RK356X内核源码下载"><a href="#RK356X内核源码下载" class="headerlink" title="RK356X内核源码下载"></a>RK356X内核源码下载</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">git clone -b stable<span class="hljs-number">-4.19</span>-rk356x https:<span class="hljs-comment">//github.com/LubanCat/kernel.git</span><br></code></pre></td></tr></table></figure>
+<h4 id="在PC上交叉编译内核"><a href="#在PC上交叉编译内核" class="headerlink" title="在PC上交叉编译内核"></a>在PC上交叉编译内核</h4><ol>
+<li>#清除之前生成的所有文件和配置</li>
+</ol>
+<p>make mrproper</p>
+<ol start="2">
+<li>加载lubancat2_defconfig配置文件，rk356x系列均是该配置文件<br>make ARCH&#x3D;arm64 CROSS_COMPILE&#x3D;aarch64-linux-gnu- lubancat2_defconfig<br>关于lubancat2_defconfig的配置文件，</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c">#搜索所有 defconfig 文件<br>find . -name <span class="hljs-string">&quot;*lubancat*defconfig*&quot;</span> -type f<br>#或者搜索所有 defconfig 文件<br>find . -name <span class="hljs-string">&quot;*defconfig&quot;</span> -type f | grep -i luban<br>#查看 arch/arm64/configs/ 目录下的所有配置<br>ls arch/arm64/configs/ | grep -i luban<br></code></pre></td></tr></table></figure>
+<p>会打印出</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c"># ARM64 架构的配置：<br>./arch/arm64/configs/lubancat_linux_rk3562_defconfig    # 用于 RK3562 芯片<br>./arch/arm64/configs/lubancat_linux_rk356x_defconfig    # 用于 RK3566/RK3568 芯片  <br>./arch/arm64/configs/lubancat_linux_rk3528_defconfig    # 用于 RK3528 芯片<br>./arch/arm64/configs/lubancat_linux_rk3588_defconfig    # 用于 RK3588 芯片<br><br># ARM32 架构的配置：<br>./arch/arm/configs/lubancat_linux_rk3128_defconfig      # 用于 RK3128 芯片<br></code></pre></td></tr></table></figure>
+<p>根据自己的板卡选用相关的配置，如make ARCH&#x3D;arm64 CROSS_COMPILE&#x3D;aarch64-linux-gnu- lubancat_linux_rk356x_defconfig，<br>会打印出如# configuration written to .config，表示配置成功</p>
+<ol start="3">
+<li>编译内核，指定平台，指定交叉编译工具，使用8线程进行编译，线程可根据电脑性能自行确定</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c"># 编译内核<br>make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j$(nproc)<br><br># 编译设备树（根据你的板子选择）<br>make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- dtbs -j$(nproc)<br><br># 编译模块<br>make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- modules -j$(nproc)<br></code></pre></td></tr></table></figure>
 
                 
               </div>
@@ -352,8 +350,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Linux常用命令</div>
-      <div>http://example.com/2025/07/13/linux常用命令/</div>
+      <div>猫2内核编译过程</div>
+      <div>http://example.com/2025/11/13/Lubancat2_compile/</div>
     </div>
     <div class="license-meta">
       
@@ -365,7 +363,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2025年7月13日</div>
+          <div>2025年11月13日</div>
         </div>
       
       
@@ -397,18 +395,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/07/14/vim/" title="linux学习-vim编辑器">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">linux学习-vim编辑器</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/05/27/%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/" title="智能指针">
-                        <span class="hidden-mobile">智能指针</span>
+                      <a href="/2025/07/14/Makefile/" title="linux学习-Makefile">
+                        <span class="hidden-mobile">linux学习-Makefile</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
